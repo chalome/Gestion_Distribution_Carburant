@@ -284,13 +284,13 @@ public class TransactionFormulaire extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(this, "Le Bon n'existe pas", "Erreur", JOptionPane.ERROR_MESSAGE);
 //        }
         else{
-            ajout=new TransactionControleur().create(new Transaction(qte, pu, pt, bon, station));
-            if(ajout==1){
-                JOptionPane.showMessageDialog(this, "Enregistrement Reussi", "Success", JOptionPane.INFORMATION_MESSAGE);
-                afficherTransactions();
-            }else{
-                 JOptionPane.showMessageDialog(this, "Echec d'enregistrement", "Erreur!", JOptionPane.ERROR_MESSAGE);
-            }
+//            ajout=new TransactionControleur().create(new Transaction(qte, pu, pt, bon, station));
+//            if(ajout==1){
+//                JOptionPane.showMessageDialog(this, "Enregistrement Reussi", "Success", JOptionPane.INFORMATION_MESSAGE);
+//                afficherTransactions();
+//            }else{
+//                 JOptionPane.showMessageDialog(this, "Echec d'enregistrement", "Erreur!", JOptionPane.ERROR_MESSAGE);
+//            }
         }
     }//GEN-LAST:event_saveActionPerformed
 

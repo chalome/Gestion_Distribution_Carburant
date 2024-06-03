@@ -16,10 +16,10 @@ public class TransactionControleur extends Commun implements ITransaction {
     private Connection connection;
     private PreparedStatement pst;
     private ResultSet res;
-    private static final String INSERT = "INSERT INTO transaction(transactionQuantite,transactionPrixUnitaire,transactionPrixTotal,transactionBonCommande,transactionStation) VALUES(?,?,?,?,?)";
-    private static final String UPDATE = "UPDATE transaction SET transactionQuantite=?,transactionPrixUnitaire=?,transactionPrixTotal=?,transactionBonCommande=?,transactionStation=?WHERE transactionID=?";
+    private static final String INSERT = "INSERT INTO transaction(transactionQuantite,transactionPrixUnitaire,transactionPrixTotal,transactionBonCommande,transactionStation,transactionService) VALUES(?,?,?,?,?,?)";
+    private static final String UPDATE = "UPDATE transaction SET transactionQuantite=?,transactionPrixUnitaire=?,transactionPrixTotal=?,transactionBonCommande=?,transactionStation=?,transactionService=?WHERE transactionID=?";
     private static final String DELETE = "DELETE FROM transaction WHERE transactionID=?";
-    private static final String SELECT_ALL = "SELECT transactionID,transactionDate,transactionQuantite,transactionPrixUnitaire,transactionPrixTotal,transactionBonCommande,stationNom FROM transaction,station where transactionStation=stationid";
+    private static final String SELECT_ALL = "SELECT transactionID,transactionDate,transactionQuantite,transactionPrixUnitaire,transactionPrixTotal,transactionBonCommande,stationNom,serviceNom FROM transaction,station,service where transactionStation=stationid and transactionService=serviceID";
 
     public TransactionControleur() {
     }
@@ -57,6 +57,7 @@ public class TransactionControleur extends Commun implements ITransaction {
             pst.setInt(3, transaction.getTransactionPrixTotal());
             pst.setString(4, transaction.getTransactionBonCommande());
             pst.setString(5, transaction.getTransactionStation());
+            pst.setString(6, transaction.getTransactionService());
             ajout = pst.executeUpdate();
             return ajout;
         } catch (Exception e) {
@@ -76,7 +77,8 @@ public class TransactionControleur extends Commun implements ITransaction {
             pst.setInt(3, transaction.getTransactionPrixTotal());
             pst.setString(4, transaction.getTransactionBonCommande());
             pst.setString(5, transaction.getTransactionStation());
-            pst.setInt(6, transaction.getTransactionID());
+            pst.setInt(7, transaction.getTransactionID());
+            pst.setString(6, transaction.getTransactionService());
             modifier = pst.executeUpdate();
             return modifier;
         } catch (Exception e) {
@@ -115,7 +117,8 @@ public class TransactionControleur extends Commun implements ITransaction {
                 String date = res.getString("transactionDate");
                 String bon = res.getString("transactionBonCommande");
                 String station = res.getString("stationNom");
-                transactions.add(new Transaction(id, qte, pu, pt, date, bon, station));
+                String service = res.getString("serviceNom");
+                transactions.add(new Transaction(id, qte, pu, pt, date, bon, station, service));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -123,4 +126,30 @@ public class TransactionControleur extends Commun implements ITransaction {
         return transactions;
     }
 
+    public List<Transaction> afficherTransactions(String serviceID, String dateDebut, String dateFin) {
+        List<Transaction> transactions = new ArrayList<>();
+        String SELECT = "SELECT transactionID,transactionDate,transactionQuantite,transactionPrixUnitaire,"
+                + "transactionPrixTotal,transactionBonCommande,stationNom,serviceNom FROM transaction,"
+                + "station,service where transactionStation=stationid and transactionService=serviceID "
+                + "AND transactionService=" + serviceID + " AND transactionDate BETWEEN '" + dateDebut + "' AND '" + dateFin + "'";
+        connection = getConnection();
+        try {
+            pst = connection.prepareStatement(SELECT);
+            res = pst.executeQuery();
+            while (res.next()) {
+                int id = res.getInt("transactionID");
+                double qte = res.getDouble("transactionQuantite");
+                int pu = res.getInt("transactionPrixUnitaire");
+                int pt = res.getInt("transactionPrixTotal");
+                String date = res.getString("transactionDate");
+                String bon = res.getString("transactionBonCommande");
+                String station = res.getString("stationNom");
+                String service = res.getString("serviceNom");
+                transactions.add(new Transaction(id, qte, pu, pt, date, bon, station, service));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return transactions;
+    }
 }

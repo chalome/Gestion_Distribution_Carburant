@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 28, 2024 at 06:33 PM
+-- Generation Time: Jun 03, 2024 at 10:32 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.28
 
@@ -45,7 +45,8 @@ CREATE TABLE `boncarburant` (
 
 INSERT INTO `boncarburant` (`bonCarburantID`, `carburant`, `BonCarburantDate`, `bonCarburantVehicule`, `bonCarburantQuantite`, `autorise_par`, `bonCarburantIDemande`, `bonStation`) VALUES
 (1, 1, '2024-05-23', 1, 40, 2, 2, 'King Star'),
-(2, 1, '2024-05-23', 3, 45, 2, 3, 'kobil');
+(2, 1, '2024-05-23', 3, 45, 2, 3, 'kobil'),
+(3, 2, '2024-06-03', 2, 25, 12, 1, 'muco');
 
 -- --------------------------------------------------------
 
@@ -113,7 +114,7 @@ CREATE TABLE `demande` (
 --
 
 INSERT INTO `demande` (`demandeID`, `demandeQuantite`, `demandeService`, `demandeMotif`, `demandeDate`, `demandeEtat`, `demandeVehicule`) VALUES
-(1, 25, 2, 'voyage ', '2024-05-22', 3, 'A202'),
+(1, 25, 2, 'voyage ', '2024-05-22', 1, 'A202'),
 (2, 40, 2, 'voyage pour mission....', '2024-05-23', 1, 'A1999'),
 (3, 45, 1, 'voyage....', '2024-05-23', 1, 'B1923');
 
@@ -163,7 +164,8 @@ INSERT INTO `employe` (`employeID`, `employeMatricule`, `employeNom`, `employePr
 (9, '0002/2024', 'MUGISHA', 'Chalome', 'Ruyigi', 3, 1, '67584930'),
 (10, '0003/2024', 'NIYUKURI', 'Didier', 'Kayanza', 3, 1, '78695040'),
 (11, '0004/2024', 'BUKURU', 'Etienne', 'Kinindo', 1, 5, '67564738'),
-(12, '0005/2024', 'RUKUNDO', 'Eric', 'Rohero', 2, 6, '78940304');
+(12, '0005/2024', 'RUKUNDO', 'Eric', 'Rohero', 2, 6, '78940304'),
+(13, '0006/2024', 'BUKEYENEZA', 'Aimable', 'Ngozi', 2, 5, '67890543');
 
 -- --------------------------------------------------------
 
@@ -186,7 +188,8 @@ INSERT INTO `modele` (`modeleID`, `modeleNom`) VALUES
 (3, 'Toyota'),
 (4, 'Karina'),
 (5, 'Rav4'),
-(6, 'Land Cruiser');
+(6, 'Land Cruiser'),
+(7, 'ractis');
 
 -- --------------------------------------------------------
 
@@ -224,7 +227,8 @@ CREATE TABLE `service` (
 INSERT INTO `service` (`serviceID`, `serviceNom`) VALUES
 (1, 'CAOD'),
 (2, 'Cabinet du ministere'),
-(3, 'Pas de service');
+(3, 'Pas de service'),
+(4, 'informatique');
 
 -- --------------------------------------------------------
 
@@ -246,7 +250,9 @@ CREATE TABLE `station` (
 
 INSERT INTO `station` (`stationID`, `stationNIF`, `stationRC`, `stationNom`, `stationAdresse`) VALUES
 (1, '8594/ut/4981', 'registre', 'King Star', 'kanyosha'),
-(3, '5649/5784/BU', 'REG', 'kobil', 'ruziba');
+(3, '5649/5784/BU', 'REG', 'kobil', 'ruziba'),
+(4, '0483/nif', 'reg', 'muco', 'kanyosha'),
+(5, '043/2024/Nif', 'register', 'fuel station', 'kinindo');
 
 -- --------------------------------------------------------
 
@@ -261,15 +267,18 @@ CREATE TABLE `transaction` (
   `transactionPrixTotal` int(11) NOT NULL,
   `transactionDate` date NOT NULL DEFAULT current_timestamp(),
   `transactionBonCommande` int(11) NOT NULL,
-  `transactionStation` int(11) NOT NULL
+  `transactionStation` int(11) NOT NULL,
+  `transactionService` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `transaction`
 --
 
-INSERT INTO `transaction` (`transactionID`, `transactionQuantite`, `transactionPrixUnitaire`, `transactionPrixTotal`, `transactionDate`, `transactionBonCommande`, `transactionStation`) VALUES
-(1, 40, 4000, 160000, '2024-05-23', 1, 1);
+INSERT INTO `transaction` (`transactionID`, `transactionQuantite`, `transactionPrixUnitaire`, `transactionPrixTotal`, `transactionDate`, `transactionBonCommande`, `transactionStation`, `transactionService`) VALUES
+(1, 40, 4000, 160000, '2024-05-23', 1, 1, 2),
+(2, 45, 4500, 202500, '2024-06-02', 2, 1, 2),
+(3, 25, 5000, 125000, '2024-06-03', 3, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -295,7 +304,8 @@ CREATE TABLE `vehicule` (
 INSERT INTO `vehicule` (`vehiculeID`, `vehiculePlaque`, `vehiculeModele`, `vehiculeAnneeFabrication`, `vehiculeTypeCarburant`, `vehiculeConsommationMoyenne`, `vehiculeService`, `vehiculeChauffeur`) VALUES
 (1, 'A1999', 1, 2020, 3, 20, 2, 2),
 (2, 'A2020', 2, 2019, 2, 20, 2, 10),
-(3, 'B1923', 2, 2022, 3, 20, 1, 10);
+(3, 'B1923', 2, 2022, 3, 20, 1, 10),
+(4, 'A3456', 5, 2021, 4, 20, 1, 9);
 
 --
 -- Indexes for dumped tables
@@ -396,7 +406,7 @@ ALTER TABLE `vehicule`
 -- AUTO_INCREMENT for table `boncarburant`
 --
 ALTER TABLE `boncarburant`
-  MODIFY `bonCarburantID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `bonCarburantID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `carburant`
@@ -426,13 +436,13 @@ ALTER TABLE `demandeetat`
 -- AUTO_INCREMENT for table `employe`
 --
 ALTER TABLE `employe`
-  MODIFY `employeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `employeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `modele`
 --
 ALTER TABLE `modele`
-  MODIFY `modeleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `modeleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `rapport`
@@ -444,25 +454,25 @@ ALTER TABLE `rapport`
 -- AUTO_INCREMENT for table `service`
 --
 ALTER TABLE `service`
-  MODIFY `serviceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `serviceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `station`
 --
 ALTER TABLE `station`
-  MODIFY `stationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `stationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `transactionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `transactionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `vehicule`
 --
 ALTER TABLE `vehicule`
-  MODIFY `vehiculeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `vehiculeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables

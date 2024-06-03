@@ -19,7 +19,6 @@ public class EmployeForm extends javax.swing.JFrame {
     public EmployeForm(String nom) {
         initComponents();
         afficheCategorieServices();
-//        darkPurpleIJTheme.setup();
         afficherEmployes();
         setIconImage(new ImageIcon(getClass().getResource("/icones/pic2.jpg")).getImage());
         setTitle("Gestion des employés");

@@ -9,16 +9,25 @@ public class Transaction {
     private String transactionDate;
     private String transactionBonCommande;
     private String transactionStation;
+    private String transactionService;
 
-    public Transaction(double transactionQuantite, int transactionPrixUnitaire, int transactionPrixTotal, String transactionBonCommande, String transactionStation) {
+    public String getTransactionService() {
+        return transactionService;
+    }
+
+    public void setTransactionService(String transactionService) {
+        this.transactionService = transactionService;
+    }
+    public Transaction(double transactionQuantite, int transactionPrixUnitaire, int transactionPrixTotal, String transactionBonCommande, String transactionStation,String transactionService) {
         this.transactionQuantite = transactionQuantite;
         this.transactionPrixUnitaire = transactionPrixUnitaire;
         this.transactionPrixTotal = transactionPrixTotal;
         this.transactionBonCommande = transactionBonCommande;
         this.transactionStation = transactionStation;
+        this.transactionService=transactionService;
     }
 
-    public Transaction(int transactionID, double transactionQuantite, int transactionPrixUnitaire, int transactionPrixTotal, String transactionDate, String transactionBonCommande, String transactionStation) {
+    public Transaction(int transactionID, double transactionQuantite, int transactionPrixUnitaire, int transactionPrixTotal, String transactionDate, String transactionBonCommande, String transactionStation,String transactionService) {
         this.transactionID = transactionID;
         this.transactionQuantite = transactionQuantite;
         this.transactionPrixUnitaire = transactionPrixUnitaire;
@@ -26,15 +35,17 @@ public class Transaction {
         this.transactionDate = transactionDate;
         this.transactionBonCommande = transactionBonCommande;
         this.transactionStation = transactionStation;
+        this.transactionService=transactionService;
     }
 
-    public Transaction(double transactionQuantite, int transactionPrixUnitaire, int transactionPrixTotal, String transactionDate, String transactionBonCommande, String transactionStation) {
+    public Transaction(double transactionQuantite, int transactionPrixUnitaire, int transactionPrixTotal, String transactionDate, String transactionBonCommande, String transactionStation,String transactionService) {
         this.transactionQuantite = transactionQuantite;
         this.transactionPrixUnitaire = transactionPrixUnitaire;
         this.transactionPrixTotal = transactionPrixTotal;
         this.transactionDate = transactionDate;
         this.transactionBonCommande = transactionBonCommande;
         this.transactionStation = transactionStation;
+        this.transactionService=transactionService;
     }
 
     public int getTransactionID() {
