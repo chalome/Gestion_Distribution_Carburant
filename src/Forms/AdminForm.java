@@ -26,15 +26,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.Graphics2D;
 import java.awt.HeadlessException;
-import java.awt.Shape;
 import java.awt.print.PrinterException;
-import java.io.FileOutputStream;
 import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +40,7 @@ public class AdminForm extends javax.swing.JFrame {
 
     public AdminForm(String nom) {
         initComponents();
+        setResizable(false);
         session.setText(nom);
         afficheCategorieServices();
         afficherEmployes();
@@ -229,6 +223,7 @@ public class AdminForm extends javax.swing.JFrame {
             serviceCombo.addItem(service);
             serviceCombo3.addItem(service);
             serviceCombo1.addItem(service);
+            serviceCombo2.addItem(service);
         }
     }
 
@@ -736,8 +731,8 @@ public class AdminForm extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addComponent(employeAjouter1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 667, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(76, Short.MAX_VALUE))
             .addGroup(EmployePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(EmployePanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -787,12 +782,12 @@ public class AdminForm extends javax.swing.JFrame {
         EmployePanelLayout.setVerticalGroup(
             EmployePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EmployePanelLayout.createSequentialGroup()
-                .addGap(0, 71, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EmployePanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(447, Short.MAX_VALUE)
                 .addComponent(employeAjouter1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EmployePanelLayout.createSequentialGroup()
+                .addGap(85, 85, 85)
+                .addComponent(jScrollPane1))
             .addGroup(EmployePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(EmployePanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -904,11 +899,11 @@ public class AdminForm extends javax.swing.JFrame {
                             .addComponent(dateFin, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(okbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 672, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(RapportPanelLayout.createSequentialGroup()
                         .addGap(270, 270, 270)
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(422, Short.MAX_VALUE))
         );
         RapportPanelLayout.setVerticalGroup(
             RapportPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -933,8 +928,8 @@ public class AdminForm extends javax.swing.JFrame {
                         .addComponent(okbtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(okbtn1))
-                    .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         MainPanel.add(RapportPanel, "card3");
@@ -1022,7 +1017,10 @@ public class AdminForm extends javax.swing.JFrame {
             .addGroup(StationPanelLayout.createSequentialGroup()
                 .addGroup(StationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(StationPanelLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(261, 261, 261)
+                        .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(StationPanelLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
                         .addGroup(StationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(StationPanelLayout.createSequentialGroup()
                                 .addGroup(StationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1045,20 +1043,17 @@ public class AdminForm extends javax.swing.JFrame {
                                     .addComponent(modifier2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(reset3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(StationPanelLayout.createSequentialGroup()
-                        .addGap(261, 261, 261)
-                        .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(394, Short.MAX_VALUE))
         );
         StationPanelLayout.setVerticalGroup(
             StationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(StationPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel52, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(StationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(StationPanelLayout.createSequentialGroup()
-                        .addGap(56, 56, 56)
                         .addGroup(StationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(nifTxt)
                             .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1084,10 +1079,9 @@ public class AdminForm extends javax.swing.JFrame {
                                 .addComponent(modifier2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(reset3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, StationPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE))
+                    .addComponent(jScrollPane11))
+                .addGap(45, 45, 45))
         );
 
         MainPanel.add(StationPanel, "card4");
@@ -1221,11 +1215,19 @@ public class AdminForm extends javax.swing.JFrame {
                         .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(MultitachePanelLayout.createSequentialGroup()
                                 .addGap(60, 60, 60)
-                                .addComponent(ajoutCategorie))
-                            .addGroup(MultitachePanelLayout.createSequentialGroup()
+                                .addComponent(ajoutCategorie)
+                                .addGap(84, 84, 84)
+                                .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(ajoutCarburant)
+                                    .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(MultitachePanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(carburantText1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MultitachePanelLayout.createSequentialGroup()
                                 .addComponent(ddd, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ddd1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(ddd1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(MultitachePanelLayout.createSequentialGroup()
                         .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(MultitachePanelLayout.createSequentialGroup()
@@ -1242,25 +1244,16 @@ public class AdminForm extends javax.swing.JFrame {
                                 .addComponent(modeleText))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(MultitachePanelLayout.createSequentialGroup()
                                 .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(CategorieText, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(carburantText1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(MultitachePanelLayout.createSequentialGroup()
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(ajoutCarburant)
-                                    .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(CategorieText))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(MultitachePanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 1288, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(371, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         MultitachePanelLayout.setVerticalGroup(
             MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1269,41 +1262,41 @@ public class AdminForm extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(MultitachePanelLayout.createSequentialGroup()
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(MultitachePanelLayout.createSequentialGroup()
+                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(serviceText, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(modeleText, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(CategorieText, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(ajoutService)
+                                    .addComponent(ajoutModele)
+                                    .addComponent(ajoutCategorie)))
+                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(MultitachePanelLayout.createSequentialGroup()
                         .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(serviceText, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(modeleText, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CategorieText, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ddd, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ddd1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(11, 11, 11)
+                        .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(carburantText1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ajoutService)
-                            .addComponent(ajoutModele)
-                            .addComponent(ajoutCategorie)
-                            .addComponent(ajoutCarburant)))
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(ddd, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ddd1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(MultitachePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(MultitachePanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
-                        .addGap(23, 23, 23))
-                    .addGroup(MultitachePanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2)
-                        .addGap(17, 17, 17))
-                    .addGroup(MultitachePanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane3)
-                        .addContainerGap())
-                    .addGroup(MultitachePanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addComponent(ajoutCarburant)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane12)))
+                .addContainerGap())
         );
 
         MainPanel.add(MultitachePanel, "card5");
@@ -1411,8 +1404,7 @@ public class AdminForm extends javax.swing.JFrame {
                 .addGroup(vehiculePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(vehiculePanelLayout.createSequentialGroup()
                         .addGap(212, 212, 212)
-                        .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(vehiculePanelLayout.createSequentialGroup()
                         .addGroup(vehiculePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, vehiculePanelLayout.createSequentialGroup()
@@ -1441,9 +1433,9 @@ public class AdminForm extends javax.swing.JFrame {
                                 .addGroup(vehiculePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(modifier, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(392, 392, 392))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(140, 140, 140))
         );
         vehiculePanelLayout.setVerticalGroup(
             vehiculePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1630,15 +1622,15 @@ public class AdminForm extends javax.swing.JFrame {
                                 .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(serviceCombo3, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(454, 454, 454))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)))
+                .addGap(286, 286, 286))
         );
         TransactionPanelLayout.setVerticalGroup(
             TransactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TransactionPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(TransactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(TransactionPanelLayout.createSequentialGroup()
@@ -1673,7 +1665,7 @@ public class AdminForm extends javax.swing.JFrame {
                         .addGroup(TransactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(supprimer1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE))
                 .addGap(19, 19, 19))
         );
 
@@ -1790,11 +1782,11 @@ public class AdminForm extends javax.swing.JFrame {
                                     .addComponent(modifier1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(reset1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE))
                     .addGroup(demandePanelLayout.createSequentialGroup()
                         .addGap(191, 191, 191)
                         .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addGap(333, 333, 333))
         );
         demandePanelLayout.setVerticalGroup(
             demandePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1950,7 +1942,7 @@ public class AdminForm extends javax.swing.JFrame {
             BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BonPanelLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(BonPanelLayout.createSequentialGroup()
                         .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1989,12 +1981,11 @@ public class AdminForm extends javax.swing.JFrame {
                                     .addComponent(employeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(BonPanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane9))
+                                .addGap(202, 202, 202)
+                                .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(BonPanelLayout.createSequentialGroup()
-                                .addGap(203, 203, 203)
-                                .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 639, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(BonPanelLayout.createSequentialGroup()
                         .addGap(153, 153, 153)
                         .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2002,8 +1993,8 @@ public class AdminForm extends javax.swing.JFrame {
                             .addGroup(BonPanelLayout.createSequentialGroup()
                                 .addGap(247, 247, 247)
                                 .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 951, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(465, Short.MAX_VALUE))
+                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 930, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         BonPanelLayout.setVerticalGroup(
             BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2015,7 +2006,7 @@ public class AdminForm extends javax.swing.JFrame {
                 .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(BonPanelLayout.createSequentialGroup()
                         .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel40, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                            .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(demandeID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(5, 5, 5)
                         .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2045,14 +2036,15 @@ public class AdminForm extends javax.swing.JFrame {
                             .addComponent(save1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(reset2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel57))
-                            .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BonPanelLayout.createSequentialGroup()
+                            .addComponent(reset2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17))
+                    .addGroup(BonPanelLayout.createSequentialGroup()
                         .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)))
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel57)
+                        .addGap(11, 11, 11)))
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE))
         );
 
         MainPanel.add(BonPanel, "card9");
@@ -2184,7 +2176,7 @@ public class AdminForm extends javax.swing.JFrame {
 
         int i = -1;
         while (i < 0) {
-            String id = JOptionPane.showInputDialog(this, "Saisir l'ID de l'employe à modifier");
+            String id = JOptionPane.showInputDialog(this, "Saisir l'ID");
             if (id.length() > 0) {
                 i++;
                 int update = 0;
@@ -2395,15 +2387,60 @@ public class AdminForm extends javax.swing.JFrame {
     }//GEN-LAST:event_saveActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
+
+        double qte = Double.parseDouble(qteTxt.getText());
+        int pu = Integer.parseInt(puTxt.getText());
+        int pt = Integer.parseInt(ptTxt.getText());
+        String bon = bnidTxt.getText();
+        String service = new ServiceControleurs().returnId("serviceID", "service", "serviceNom", serviceCombo3.getSelectedItem().toString());
+        String station = new StationControleur().returnId("stationID", "station", "stationNom", stationCombo.getSelectedItem().toString());
+        int i = -1;
+        while (i < 0) {
+            String id = JOptionPane.showInputDialog(this, "Saisir l'ID");
+            if (id.length() > 0) {
+                i++;
+                int update = 0;
+                int employeID = Integer.parseInt(id);
+
+                int y = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiement faire la modification?",
+                        "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (y == JOptionPane.OK_OPTION) {
+                    update = new TransactionControleur().update(new Transaction(employeID, qte, pu, pt, bon, station, service));
+                    if (update == 1) {
+                        JOptionPane.showMessageDialog(this, "Modifié avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                        afficherTransactions();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Action failed", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void supprimer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimer1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_supprimer1ActionPerformed
+        int ligne = tableTransaction.getSelectedRow();
+        int id = Integer.parseInt(tableTransaction.getValueAt(ligne, 0).toString());
+        int delete = 0;
+        Transaction transaction = new Transaction();
+        transaction.setTransactionID(id);
+        int y = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiement faire la suppression ?",
+                "Confirmation", JOptionPane.YES_NO_OPTION);
+        if (y == JOptionPane.OK_OPTION) {
+            delete = new TransactionControleur().delete(transaction);
+            if (delete == 1) {
+                JOptionPane.showMessageDialog(this, "Supprimmé avec succès!", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                afficherTransactions();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Echec de suppression", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        }    }//GEN-LAST:event_supprimer1ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
+        puTxt.setText("");
+        qteTxt.setText("");
+        ptTxt.setText("");
+        bnidTxt.setText("");
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void ajouter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouter1ActionPerformed
@@ -2456,7 +2493,7 @@ public class AdminForm extends javax.swing.JFrame {
         DemandeControleur controleur = new DemandeControleur();
         int i = -1;
         while (i < 0) {
-            String id = JOptionPane.showInputDialog(this, "Saisir l'ID de l'employe à modifier");
+            String id = JOptionPane.showInputDialog(this, "Saisir l'ID");
             if (id.length() > 0) {
                 i++;
                 int update;
@@ -2532,15 +2569,60 @@ public class AdminForm extends javax.swing.JFrame {
     }//GEN-LAST:event_save1ActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-        // TODO add your handling code here:
+        VehiculeControleur vehiculeControleur = new VehiculeControleur();
+        EmployeControleur employeControleur = new EmployeControleur();
+        CarburantControleur carburantControleur = new CarburantControleur();
+        BonCarburantControleur bonCarburantControleur = new BonCarburantControleur();
+         int i = -1;
+        while (i < 0) {
+            String id = JOptionPane.showInputDialog(this, "Saisir l'ID");
+            if (id.length() > 0) {
+                i++;
+                int update;
+                int bonID = Integer.parseInt(id);
+                int y = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiement faire la modification?",
+                        "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (y == JOptionPane.OK_OPTION) {
+                    update = bonCarburantControleur.create(new BonCarburant(bonID,
+                    carburantControleur.returnId("carburantID", "carburant", "carburantNom", carburantText.getText()),
+                    vehiculeControleur.returnId("vehiculeID", "vehicule", "vehiculePlaque", VehiculeCombo.getSelectedItem().toString()),
+                    employeControleur.returnId("employeID", "employe", "concat(employeNom,' ',employePrenom)", employeCombo.getSelectedItem().toString()), Integer.parseInt(demandeID.getText()), Double.parseDouble(qteTxt2.getText()), stationCombo1.getSelectedItem().toString()));
+                    
+                    if (update == 1) {
+                        JOptionPane.showMessageDialog(this, "Modifié avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                        afficherDemandes();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Action failed", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_updateActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-        // TODO add your handling code here:
+         int ligne = tableBon.getSelectedRow();
+        int id = Integer.parseInt(tableBon.getValueAt(ligne, 0).toString());
+        int delete;
+        BonCarburant bon = new BonCarburant();
+        BonCarburantControleur controleur = new BonCarburantControleur();
+        bon.setBonCarburantID(id);
+        int y = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiement faire la suppression ?",
+                "Confirmation", JOptionPane.YES_NO_OPTION);
+        if (y == JOptionPane.OK_OPTION) {
+            delete = controleur.delete(bon);
+            if (delete == 1) {
+                JOptionPane.showMessageDialog(this, "Supprimmé avec succès!", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                afficherStation();
+            } else {
+                JOptionPane.showMessageDialog(this, "Echec de suppression", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_deleteActionPerformed
 
     private void reset2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset2ActionPerformed
-        // TODO add your handling code here:
+        demandeID.setText("");
+        carburantText.setText("");
+        qteTxt2.setText("");
     }//GEN-LAST:event_reset2ActionPerformed
 
     private void ajouter2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouter2ActionPerformed
@@ -2597,7 +2679,7 @@ public class AdminForm extends javax.swing.JFrame {
         StationControleur controleur = new StationControleur();
         int i = -1;
         while (i < 0) {
-            String id = JOptionPane.showInputDialog(this, "Saisir l'ID de l'employe à modifier");
+            String id = JOptionPane.showInputDialog(this, "Saisir l'ID");
             if (id.length() > 0) {
                 i++;
                 int update;
@@ -2752,7 +2834,7 @@ public class AdminForm extends javax.swing.JFrame {
         String modeleID = new ModeleControleur().returnId("modeleID", "modele", "modeleNom", modele);
         int i = -1;
         while (i < 0) {
-            String id = JOptionPane.showInputDialog(this, "Saisir l'ID de l'employe à modifier");
+            String id = JOptionPane.showInputDialog(this, "Saisir l'ID");
             if (id.length() > 0) {
                 i++;
                 int updates;
@@ -2762,7 +2844,7 @@ public class AdminForm extends javax.swing.JFrame {
                     updates = new VehiculeControleur().update(new Vehicule(Integer.parseInt(id), plaques, modeleID, annees, carburantID, consMoy, serviceId, chauffeurID));
                     if (updates == 1) {
                         JOptionPane.showMessageDialog(this, "Modifié avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                        afficherDemandes();
+                        afficherVehicules();
                     } else {
                         JOptionPane.showMessageDialog(this, "Action failed", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -2784,7 +2866,7 @@ public class AdminForm extends javax.swing.JFrame {
             delete = controleur.delete(vehicule);
             if (delete == 1) {
                 JOptionPane.showMessageDialog(this, "Supprimmé avec succès!", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                afficherStation();
+                afficherVehicules();
             } else {
                 JOptionPane.showMessageDialog(this, "Echec de suppression", "Erreur", JOptionPane.ERROR_MESSAGE);
             }

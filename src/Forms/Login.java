@@ -10,6 +10,7 @@ public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
+        setResizable(false);
         setIconImage(new ImageIcon(getClass().getResource("/icones/pic2.jpg")).getImage());
         setTitle("Login page");
     }

@@ -11,6 +11,9 @@ public class Transaction {
     private String transactionStation;
     private String transactionService;
 
+    public Transaction() {
+    }
+
     public String getTransactionService() {
         return transactionService;
     }
@@ -46,6 +49,16 @@ public class Transaction {
         this.transactionBonCommande = transactionBonCommande;
         this.transactionStation = transactionStation;
         this.transactionService=transactionService;
+    }
+
+    public Transaction(int transactionID, double transactionQuantite, int transactionPrixUnitaire, int transactionPrixTotal, String transactionBonCommande, String transactionStation, String transactionService) {
+        this.transactionID = transactionID;
+        this.transactionQuantite = transactionQuantite;
+        this.transactionPrixUnitaire = transactionPrixUnitaire;
+        this.transactionPrixTotal = transactionPrixTotal;
+        this.transactionBonCommande = transactionBonCommande;
+        this.transactionStation = transactionStation;
+        this.transactionService = transactionService;
     }
 
     public int getTransactionID() {
