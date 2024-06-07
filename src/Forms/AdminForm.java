@@ -2590,7 +2590,7 @@ public class AdminForm extends javax.swing.JFrame {
                     
                     if (update == 1) {
                         JOptionPane.showMessageDialog(this, "Modifié avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                        afficherDemandes();
+                        afficherBons();
                     } else {
                         JOptionPane.showMessageDialog(this, "Action failed", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -2612,7 +2612,7 @@ public class AdminForm extends javax.swing.JFrame {
             delete = controleur.delete(bon);
             if (delete == 1) {
                 JOptionPane.showMessageDialog(this, "Supprimmé avec succès!", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                afficherStation();
+                afficherBons();
             } else {
                 JOptionPane.showMessageDialog(this, "Echec de suppression", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
