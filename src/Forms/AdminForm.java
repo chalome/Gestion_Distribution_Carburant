@@ -11,6 +11,8 @@ import Controleurs.ServiceControleurs;
 import Controleurs.StationControleur;
 import Controleurs.TransactionControleur;
 import Controleurs.VehiculeControleur;
+import Controleurs.approvisionnementControleur;
+import Modeles.Approvisionnement;
 import Modeles.BonCarburant;
 import Modeles.CategorieEmploye;
 import Modeles.Demande;
@@ -21,6 +23,8 @@ import Modeles.Station;
 import Modeles.Transaction;
 import Modeles.TypeCarburant;
 import Modeles.Vehicule;
+import Themes.ThemesControl;
+import com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -35,8 +39,11 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.OrientationRequested;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 
 public class AdminForm extends javax.swing.JFrame {
+
+    private boolean isDarkTheme = false;
 
     public AdminForm(String nom) {
         initComponents();
@@ -49,6 +56,7 @@ public class AdminForm extends javax.swing.JFrame {
         afficherVehicules();
         afficherBons();
         afficherCombo();
+        afficherApprovisions();
         afficherTransactions();
         new CategorieEmployeCotroleur().afficherCategorieEmployes();
         new ServiceControleurs().afficherListeServices(listService);
@@ -58,6 +66,17 @@ public class AdminForm extends javax.swing.JFrame {
         qui(session.getText());
         new CategorieEmployeCotroleur().afficherListeCategories(listCategorie);
         new CarburantControleur().afficherListeCarburants(listCarburant);
+        FlatLightFlatIJTheme.setup();
+    }
+
+    public void switchTheme() {
+        if (isDarkTheme) {
+            new ThemesControl().setLightTheme();
+        } else {
+            new ThemesControl().setDarkTheme();
+        }
+        SwingUtilities.updateComponentTreeUI(this);
+        isDarkTheme = !isDarkTheme;
     }
 
     void qui(String nom) {
@@ -85,6 +104,7 @@ public class AdminForm extends javax.swing.JFrame {
         List<TypeCarburant> serviceList = new CarburantControleur().afficherTypeCaburants();
         for (TypeCarburant carburant : serviceList) {
             carburantCombo.addItem(carburant);
+            appCarburant.addItem(carburant);
         }
         List<Employe> employes = new EmployeControleur().afficherEmployes();
         for (Employe employe : employes) {
@@ -94,11 +114,13 @@ public class AdminForm extends javax.swing.JFrame {
         List<Vehicule> vehicules = new VehiculeControleur().afficherVehicules();
         for (Vehicule vehicule : vehicules) {
             VehiculeCombo.addItem(vehicule);
+            vehiculeTxt.addItem(vehicule);
         }
         List<Station> stations = new StationControleur().afficherStations();
         for (Station station : stations) {
             stationCombo.addItem(station);
             stationCombo1.addItem(station);
+            appFourn.addItem(station);
         }
         List<Modele> modeleList = new ModeleControleur().afficherModeles();
         for (Modele modele : modeleList) {
@@ -123,6 +145,23 @@ public class AdminForm extends javax.swing.JFrame {
             i++;
         }
         tableBon.setModel(new DefaultTableModel(data, header));
+    }
+
+    void afficherApprovisions() {
+        approvisionnementControleur controleur = new approvisionnementControleur();
+        String header[] = {"ID", "QUANTITE", "P.U", "P.T", "CARBURANT", "FOURNISSEUR"};
+        Object data[][] = new Object[controleur.listApprovisions().size()][6];
+        int i = 0;
+        for (Approvisionnement approvisionnement : controleur.listApprovisions()) {
+            data[i][0] = approvisionnement.getApprovisionID();
+            data[i][1] = approvisionnement.getApprovisionQuantite();
+            data[i][2] = approvisionnement.getApprovisionPU();
+            data[i][3] = approvisionnement.getApprovisionPT();
+            data[i][4] = approvisionnement.getApprovisionCarburant();
+            data[i][5] = approvisionnement.getApprovisionFournisseur();
+            i++;
+        }
+        appTable.setModel(new DefaultTableModel(data, header));
     }
 
     private void afficherDemandes() {
@@ -280,6 +319,8 @@ public class AdminForm extends javax.swing.JFrame {
         homebtn = new javax.swing.JButton();
         session = new javax.swing.JLabel();
         session1 = new javax.swing.JLabel();
+        approvisionBtn = new javax.swing.JButton();
+        switchButton = new Themes.SwitchButton();
         MainPanel = new javax.swing.JPanel();
         Home = new javax.swing.JPanel();
         jLabel53 = new javax.swing.JLabel();
@@ -411,7 +452,6 @@ public class AdminForm extends javax.swing.JFrame {
         serviceCombo2 = new javax.swing.JComboBox<Service>();
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
-        vehiculeTxt = new javax.swing.JTextField();
         jLabel39 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         mofifTxt = new javax.swing.JTextArea();
@@ -421,6 +461,7 @@ public class AdminForm extends javax.swing.JFrame {
         reset1 = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         tableDemande = new javax.swing.JTable();
+        vehiculeTxt = new javax.swing.JComboBox<Vehicule>();
         BonPanel = new javax.swing.JPanel();
         jLabel40 = new javax.swing.JLabel();
         demandeID = new javax.swing.JTextField();
@@ -434,7 +475,7 @@ public class AdminForm extends javax.swing.JFrame {
         stationCombo1 = new javax.swing.JComboBox<Station>();
         jLabel45 = new javax.swing.JLabel();
         employeCombo = new javax.swing.JComboBox<Employe>();
-        save1 = new javax.swing.JButton();
+        saveBon = new javax.swing.JButton();
         update = new javax.swing.JButton();
         delete = new javax.swing.JButton();
         reset2 = new javax.swing.JButton();
@@ -445,6 +486,24 @@ public class AdminForm extends javax.swing.JFrame {
         jScrollPane10 = new javax.swing.JScrollPane();
         tableBon = new javax.swing.JTable();
         jLabel57 = new javax.swing.JLabel();
+        approvisionPanel = new javax.swing.JPanel();
+        appQte = new javax.swing.JTextField();
+        jLabel58 = new javax.swing.JLabel();
+        jLabel59 = new javax.swing.JLabel();
+        appPU = new javax.swing.JTextField();
+        jLabel60 = new javax.swing.JLabel();
+        appFourn = new javax.swing.JComboBox<Station>();
+        jLabel61 = new javax.swing.JLabel();
+        appCarburant = new javax.swing.JComboBox();
+        saveApp = new javax.swing.JButton();
+        updateApp = new javax.swing.JButton();
+        deleteapp = new javax.swing.JButton();
+        resetapp = new javax.swing.JButton();
+        jLabel62 = new javax.swing.JLabel();
+        appPT = new javax.swing.JTextField();
+        jScrollPane14 = new javax.swing.JScrollPane();
+        appTable = new javax.swing.JTable();
+        jLabel63 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1200, 606));
@@ -477,7 +536,7 @@ public class AdminForm extends javax.swing.JFrame {
         });
 
         stationbtn.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        stationbtn.setText("Station");
+        stationbtn.setText("Fournisseur");
         stationbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stationbtnActionPerformed(evt);
@@ -541,6 +600,20 @@ public class AdminForm extends javax.swing.JFrame {
         session1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         session1.setText("est connecté");
 
+        approvisionBtn.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        approvisionBtn.setText("Approvision");
+        approvisionBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                approvisionBtnActionPerformed(evt);
+            }
+        });
+
+        switchButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                switchButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -559,8 +632,13 @@ public class AdminForm extends javax.swing.JFrame {
                     .addComponent(deconnectionbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(homebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(session1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(session, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(session, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(approvisionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(switchButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -569,7 +647,7 @@ public class AdminForm extends javax.swing.JFrame {
                 .addComponent(session, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(session1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(homebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(employebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -587,9 +665,13 @@ public class AdminForm extends javax.swing.JFrame {
                 .addComponent(demandebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bonBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(8, 8, 8)
+                .addComponent(approvisionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deconnectionbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(switchButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         MainPanel.setPreferredSize(new java.awt.Dimension(110, 532));
@@ -598,17 +680,19 @@ public class AdminForm extends javax.swing.JFrame {
         Home.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel53.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel53.setForeground(new java.awt.Color(255, 255, 255));
         jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel53.setText("Page d'acceuil");
         Home.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 916, 31));
 
         jLabel54.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel54.setForeground(new java.awt.Color(255, 255, 255));
         jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel54.setText("Application pour la Gestion des bons de carburant cas du MFBP");
         Home.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 192, 896, 31));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/pic2.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/bg1.jpg"))); // NOI18N
         Home.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 600));
 
         MainPanel.add(Home, "card10");
@@ -617,11 +701,11 @@ public class AdminForm extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Gestion des employés");
+        jLabel2.setText("Gestion des utilisateurs");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Ajouter un employé");
+        jLabel3.setText("Ajouter un utilisateur");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel7.setText("Matricule");
@@ -990,7 +1074,7 @@ public class AdminForm extends javax.swing.JFrame {
 
         jLabel52.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel52.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel52.setText("Gestion des Stations");
+        jLabel52.setText("Gestion des Fournisseurs");
 
         tableStation.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1044,7 +1128,7 @@ public class AdminForm extends javax.swing.JFrame {
                                     .addComponent(reset3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(394, Short.MAX_VALUE))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
         StationPanelLayout.setVerticalGroup(
             StationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1079,7 +1163,7 @@ public class AdminForm extends javax.swing.JFrame {
                                 .addComponent(modifier2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(reset3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE))
                     .addComponent(jScrollPane11))
                 .addGap(45, 45, 45))
         );
@@ -1623,14 +1707,14 @@ public class AdminForm extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(serviceCombo3, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)))
                 .addGap(286, 286, 286))
         );
         TransactionPanelLayout.setVerticalGroup(
             TransactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TransactionPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(TransactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(TransactionPanelLayout.createSequentialGroup()
@@ -1665,7 +1749,7 @@ public class AdminForm extends javax.swing.JFrame {
                         .addGroup(TransactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(supprimer1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE))
                 .addGap(19, 19, 19))
         );
 
@@ -1689,8 +1773,6 @@ public class AdminForm extends javax.swing.JFrame {
 
         jLabel38.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel38.setText("Vehicule:");
-
-        vehiculeTxt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         jLabel39.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1751,6 +1833,8 @@ public class AdminForm extends javax.swing.JFrame {
         });
         jScrollPane8.setViewportView(tableDemande);
 
+        vehiculeTxt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+
         javax.swing.GroupLayout demandePanelLayout = new javax.swing.GroupLayout(demandePanel);
         demandePanel.setLayout(demandePanelLayout);
         demandePanelLayout.setHorizontalGroup(
@@ -1772,7 +1856,7 @@ public class AdminForm extends javax.swing.JFrame {
                                         .addComponent(serviceCombo2, javax.swing.GroupLayout.Alignment.LEADING, 0, 199, Short.MAX_VALUE)
                                         .addComponent(jLabel39, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(qteTxt1, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(vehiculeTxt))))
+                                        .addComponent(vehiculeTxt, 0, 199, Short.MAX_VALUE))))
                             .addGroup(demandePanelLayout.createSequentialGroup()
                                 .addGroup(demandePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(supprimer2)
@@ -1782,7 +1866,7 @@ public class AdminForm extends javax.swing.JFrame {
                                     .addComponent(modifier1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(reset1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE))
+                        .addComponent(jScrollPane8))
                     .addGroup(demandePanelLayout.createSequentialGroup()
                         .addGap(191, 191, 191)
                         .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1804,8 +1888,8 @@ public class AdminForm extends javax.swing.JFrame {
                             .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(serviceCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(demandePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(demandePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(vehiculeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1867,12 +1951,17 @@ public class AdminForm extends javax.swing.JFrame {
         jLabel45.setText("Autorise par:");
 
         employeCombo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-
-        save1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        save1.setText("Enregister");
-        save1.addActionListener(new java.awt.event.ActionListener() {
+        employeCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                save1ActionPerformed(evt);
+                employeComboActionPerformed(evt);
+            }
+        });
+
+        saveBon.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        saveBon.setText("Enregister");
+        saveBon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBonActionPerformed(evt);
             }
         });
 
@@ -1969,7 +2058,7 @@ public class AdminForm extends javax.swing.JFrame {
                                 .addGroup(BonPanelLayout.createSequentialGroup()
                                     .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(delete)
-                                        .addComponent(save1))
+                                        .addComponent(saveBon))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(update, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
@@ -2033,7 +2122,7 @@ public class AdminForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(update, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(save1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(saveBon, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(reset2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2044,10 +2133,196 @@ public class AdminForm extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jLabel57)
                         .addGap(11, 11, 11)))
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE))
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
         );
 
         MainPanel.add(BonPanel, "card9");
+
+        appQte.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        appQte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                appQteActionPerformed(evt);
+            }
+        });
+
+        jLabel58.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel58.setText("Quantite:");
+
+        jLabel59.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel59.setText("PU:");
+
+        appPU.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        appPU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                appPUActionPerformed(evt);
+            }
+        });
+        appPU.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                appPUKeyReleased(evt);
+            }
+        });
+
+        jLabel60.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel60.setText("Fournisseur:");
+
+        appFourn.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        appFourn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                appFournActionPerformed(evt);
+            }
+        });
+
+        jLabel61.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel61.setText("Carburant:");
+
+        appCarburant.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        appCarburant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                appCarburantActionPerformed(evt);
+            }
+        });
+
+        saveApp.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        saveApp.setText("Enregister");
+        saveApp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveAppActionPerformed(evt);
+            }
+        });
+
+        updateApp.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        updateApp.setText("Modifier");
+        updateApp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateAppActionPerformed(evt);
+            }
+        });
+
+        deleteapp.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        deleteapp.setText("Supprimer");
+        deleteapp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteappActionPerformed(evt);
+            }
+        });
+
+        resetapp.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        resetapp.setText("Reset");
+        resetapp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetappActionPerformed(evt);
+            }
+        });
+
+        jLabel62.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel62.setText("PT:");
+
+        appPT.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+
+        appTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane14.setViewportView(appTable);
+
+        jLabel63.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel63.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel63.setText("Approvisionnements");
+
+        javax.swing.GroupLayout approvisionPanelLayout = new javax.swing.GroupLayout(approvisionPanel);
+        approvisionPanel.setLayout(approvisionPanelLayout);
+        approvisionPanelLayout.setHorizontalGroup(
+            approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(approvisionPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(approvisionPanelLayout.createSequentialGroup()
+                        .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(approvisionPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(appFourn, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(approvisionPanelLayout.createSequentialGroup()
+                                    .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(deleteapp)
+                                        .addComponent(saveApp))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(updateApp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(resetapp, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(approvisionPanelLayout.createSequentialGroup()
+                                    .addGap(4, 4, 4)
+                                    .addComponent(jLabel61, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(appCarburant, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(approvisionPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel62, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(appPT, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(36, 36, 36)
+                        .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(approvisionPanelLayout.createSequentialGroup()
+                        .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel59, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel63, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(appQte, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(appPU, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+        );
+        approvisionPanelLayout.setVerticalGroup(
+            approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(approvisionPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel63, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(approvisionPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(approvisionPanelLayout.createSequentialGroup()
+                        .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(appQte)
+                            .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(appPU, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                            .addComponent(jLabel59, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(5, 5, 5)
+                        .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(appPT, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                            .addComponent(jLabel62, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(appFourn, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7)
+                        .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(appCarburant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel61))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(updateApp, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(saveApp, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(approvisionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(resetapp, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deleteapp, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(303, 303, 303))))
+        );
+
+        MainPanel.add(approvisionPanel, "card11");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -2372,17 +2647,22 @@ public class AdminForm extends javax.swing.JFrame {
         String station = new StationControleur().returnId("stationID", "station", "stationNom", stationCombo.getSelectedItem().toString());
         if (qteTxt.getText().isEmpty() || puTxt.getText().isEmpty() || ptTxt.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tous Les champ sont obligatoires", "Erreur", JOptionPane.ERROR_MESSAGE);
-        } //        else if(!new BonCarburantControleur().dejaExist(bnidTxt.getText())){
-        //            JOptionPane.showMessageDialog(this, "Le Bon n'existe pas", "Erreur", JOptionPane.ERROR_MESSAGE);
-        //        }
-        else {
-            ajout = new TransactionControleur().create(new Transaction(qte, pu, pt, bon, station, service));
-            if (ajout == 1) {
-                JOptionPane.showMessageDialog(this, "Enregistrement Reussi", "Success", JOptionPane.INFORMATION_MESSAGE);
-                afficherTransactions();
-            } else {
-                JOptionPane.showMessageDialog(this, "Echec d'enregistrement", "Erreur!", JOptionPane.ERROR_MESSAGE);
-            }
+        } else if (!new BonCarburantControleur().dejaExist(bnidTxt.getText())) {
+            JOptionPane.showMessageDialog(this, "Le Bon n'existe pas", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } else if (new approvisionnementControleur().finished()) {
+            JOptionPane.showMessageDialog(this, "Il n'y a plus de carburant dans le stock", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } else if (Integer.parseInt(qteTxt.getText()) > Integer.parseInt(new approvisionnementControleur().afficherQuantite())) {
+            JOptionPane.showMessageDialog(this, "Il reste " + new approvisionnementControleur().afficherQuantite() + " litres en stock", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } else {
+//            ajout = new TransactionControleur().create(new Transaction(qte, pu, pt, bon, station, service));
+//            if (ajout == 1) {
+//                new approvisionnementControleur().modifier(qte);
+//                JOptionPane.showMessageDialog(this, "Enregistrement Reussi", "Success", JOptionPane.INFORMATION_MESSAGE);
+//                afficherTransactions();
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Echec d'enregistrement", "Erreur!", JOptionPane.ERROR_MESSAGE);
+//            }
+             JOptionPane.showMessageDialog(this, "nice", "Success", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_saveActionPerformed
 
@@ -2444,18 +2724,18 @@ public class AdminForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void ajouter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouter1ActionPerformed
-        double qte = Double.parseDouble(qteTxt.getText());
-        String service = serviceCombo.getSelectedItem().toString();
+        double qte = Double.parseDouble(qteTxt1.getText());
+        String service = serviceCombo2.getSelectedItem().toString();
         String motif = mofifTxt.getText();
         ServiceControleurs controleurs = new ServiceControleurs();
         DemandeControleur controleur = new DemandeControleur();
         int ajout;
-        if (qteTxt.getText().trim().isEmpty()
+        if (qteTxt1.getText().trim().isEmpty()
                 || service.trim().isEmpty()
                 || motif.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tous Les champ sont obligatoires", "Erreur", JOptionPane.ERROR_MESSAGE);
         } else {
-            ajout = controleur.create(new Demande(qte, controleurs.returnId("serviceID", "service", "serviceNom", service), motif, vehiculeTxt.getText()));
+            ajout = controleur.create(new Demande(qte, controleurs.returnId("serviceID", "service", "serviceNom", service), motif, vehiculeTxt.getSelectedItem().toString()));
             if (ajout == 1) {
                 JOptionPane.showMessageDialog(this, "Enregistrement Reussi", "Success", JOptionPane.INFORMATION_MESSAGE);
                 afficherDemandes();
@@ -2486,8 +2766,8 @@ public class AdminForm extends javax.swing.JFrame {
     }//GEN-LAST:event_supprimer2ActionPerformed
 
     private void modifier1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifier1ActionPerformed
-        double qte = Double.parseDouble(qteTxt.getText());
-        String service = serviceCombo.getSelectedItem().toString();
+        double qte = Double.parseDouble(qteTxt1.getText());
+        String service = serviceCombo2.getSelectedItem().toString();
         String motif = mofifTxt.getText();
         ServiceControleurs controleurs = new ServiceControleurs();
         DemandeControleur controleur = new DemandeControleur();
@@ -2501,7 +2781,7 @@ public class AdminForm extends javax.swing.JFrame {
                 int y = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiement faire la modification?",
                         "Confirmation", JOptionPane.YES_NO_OPTION);
                 if (y == JOptionPane.OK_OPTION) {
-                    update = controleur.update(new Demande(demandeID, qte, controleurs.returnId("serviceID", "service", "serviceNom", service), motif, vehiculeTxt.getText()));
+                    update = controleur.update(new Demande(demandeID, qte, controleurs.returnId("serviceID", "service", "serviceNom", service), motif, vehiculeTxt.getSelectedItem().toString()));
                     if (update == 1) {
                         JOptionPane.showMessageDialog(this, "Modifié avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
                         afficherDemandes();
@@ -2517,7 +2797,7 @@ public class AdminForm extends javax.swing.JFrame {
         qteTxt.setText("");
         serviceCombo.setSelectedItem(null);
         mofifTxt.setText("");
-        vehiculeTxt.setText("");
+        vehiculeTxt.setSelectedItem("");
     }//GEN-LAST:event_reset1ActionPerformed
 
     private void tableDemandeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDemandeMouseReleased
@@ -2525,7 +2805,7 @@ public class AdminForm extends javax.swing.JFrame {
         qteTxt.setText(tableDemande.getValueAt(row, 1).toString());
         serviceCombo.setSelectedItem(tableDemande.getValueAt(row, 2).toString());
         mofifTxt.setText(tableDemande.getValueAt(row, 3).toString());
-        vehiculeTxt.setText(tableDemande.getValueAt(row, 5).toString());
+        vehiculeTxt.setSelectedItem(tableDemande.getValueAt(row, 5).toString());
     }//GEN-LAST:event_tableDemandeMouseReleased
 
     private void VehiculeComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_VehiculeComboItemStateChanged
@@ -2543,7 +2823,7 @@ public class AdminForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_VehiculeComboActionPerformed
 
-    private void save1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save1ActionPerformed
+    private void saveBonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBonActionPerformed
         VehiculeControleur vehiculeControleur = new VehiculeControleur();
         EmployeControleur employeControleur = new EmployeControleur();
         CarburantControleur carburantControleur = new CarburantControleur();
@@ -2566,14 +2846,14 @@ public class AdminForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Echec d'enregistrement", "Erreur!", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }//GEN-LAST:event_save1ActionPerformed
+    }//GEN-LAST:event_saveBonActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         VehiculeControleur vehiculeControleur = new VehiculeControleur();
         EmployeControleur employeControleur = new EmployeControleur();
         CarburantControleur carburantControleur = new CarburantControleur();
         BonCarburantControleur bonCarburantControleur = new BonCarburantControleur();
-         int i = -1;
+        int i = -1;
         while (i < 0) {
             String id = JOptionPane.showInputDialog(this, "Saisir l'ID");
             if (id.length() > 0) {
@@ -2583,11 +2863,15 @@ public class AdminForm extends javax.swing.JFrame {
                 int y = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiement faire la modification?",
                         "Confirmation", JOptionPane.YES_NO_OPTION);
                 if (y == JOptionPane.OK_OPTION) {
-                    update = bonCarburantControleur.create(new BonCarburant(bonID,
-                    carburantControleur.returnId("carburantID", "carburant", "carburantNom", carburantText.getText()),
-                    vehiculeControleur.returnId("vehiculeID", "vehicule", "vehiculePlaque", VehiculeCombo.getSelectedItem().toString()),
-                    employeControleur.returnId("employeID", "employe", "concat(employeNom,' ',employePrenom)", employeCombo.getSelectedItem().toString()), Integer.parseInt(demandeID.getText()), Double.parseDouble(qteTxt2.getText()), stationCombo1.getSelectedItem().toString()));
-                    
+                    update = bonCarburantControleur.update(new BonCarburant(
+                            bonID,
+                            carburantControleur.returnId("carburantID", "carburant", "carburantNom", carburantText.getText()),
+                            vehiculeControleur.returnId("vehiculeID", "vehicule", "vehiculePlaque", VehiculeCombo.getSelectedItem().toString()),
+                            employeControleur.returnId("employeID", "employe", "concat(employeNom,' ',employePrenom)", employeCombo.getSelectedItem().toString()),
+                            Integer.parseInt(demandeID.getText()),
+                            Double.parseDouble(qteTxt2.getText()),
+                            stationCombo1.getSelectedItem().toString()));
+
                     if (update == 1) {
                         JOptionPane.showMessageDialog(this, "Modifié avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
                         afficherBons();
@@ -2600,7 +2884,7 @@ public class AdminForm extends javax.swing.JFrame {
     }//GEN-LAST:event_updateActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-         int ligne = tableBon.getSelectedRow();
+        int ligne = tableBon.getSelectedRow();
         int id = Integer.parseInt(tableBon.getValueAt(ligne, 0).toString());
         int delete;
         BonCarburant bon = new BonCarburant();
@@ -2805,7 +3089,8 @@ public class AdminForm extends javax.swing.JFrame {
 
     private void okbtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okbtn1ActionPerformed
         MessageFormat header = new MessageFormat("Rapport pour le service: " + serviceCombo.getSelectedItem().toString());
-        MessageFormat footer = new MessageFormat("*******************************par " + session.getText() + "************************************");
+        MessageFormat footer = new MessageFormat("Total = " + tableSomme(3) + "Fbu \t                 \n\n\n"
+                + " par " + session.getText());
         PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
         set.add(OrientationRequested.PORTRAIT);
         try {
@@ -2892,6 +3177,133 @@ public class AdminForm extends javax.swing.JFrame {
         serviceCombo1.setSelectedItem(tableVehicule.getValueAt(row, 6).toString());
     }//GEN-LAST:event_tableVehiculeMouseReleased
 
+    private void employeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_employeComboActionPerformed
+
+    private void approvisionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approvisionBtnActionPerformed
+        MainPanel.removeAll();
+        MainPanel.repaint();
+        MainPanel.revalidate();
+        MainPanel.add(approvisionPanel);
+        MainPanel.repaint();
+        MainPanel.revalidate();
+    }//GEN-LAST:event_approvisionBtnActionPerformed
+
+    private void appCarburantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appCarburantActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_appCarburantActionPerformed
+
+    private void saveAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAppActionPerformed
+        double qte = Double.parseDouble(appQte.getText());
+        int pu = Integer.parseInt(appPU.getText());
+        int pt = Integer.parseInt(appPT.getText());
+        String fourn = new StationControleur().returnId("stationID", "station", "stationNom", appFourn.getSelectedItem().toString());
+        String carburant = new CarburantControleur().returnId("carburantID", "carburant", "carburantNom", appCarburant.getSelectedItem().toString());
+        int ajout;
+        if (appQte.getText().trim().isEmpty()
+                || appPU.getText().trim().isEmpty()
+                || appPT.getText().trim().isEmpty()
+                || appFourn.getSelectedItem().toString().trim().isEmpty()
+                || appCarburant.getSelectedItem().toString().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tous Les champ sont obligatoires", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } else if (new approvisionnementControleur().dejaExist()) {
+            JOptionPane.showMessageDialog(this, "Il ya encore du carburant en stock", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } else {
+            ajout = new approvisionnementControleur().ajouter(new Approvisionnement(qte, pu, pt, fourn, carburant));
+            if (ajout == 1) {
+                JOptionPane.showMessageDialog(this, "Enregistrement Reussi", "Success", JOptionPane.INFORMATION_MESSAGE);
+                afficherStation();
+            } else {
+                JOptionPane.showMessageDialog(this, "Echec d'enregistrement", "Erreur!", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+    }//GEN-LAST:event_saveAppActionPerformed
+
+    private void updateAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateAppActionPerformed
+        double qte = Double.parseDouble(appQte.getText());
+        int pu = Integer.parseInt(appPU.getText());
+        int pt = Integer.parseInt(appPT.getText());
+        String fourn = new StationControleur().returnId("stationID", "station", "stationNom", appFourn.getSelectedItem().toString());
+        String carburant = new CarburantControleur().returnId("carburantID", "carburant", "carburantNom", appCarburant.getSelectedItem().toString());
+        int i = -1;
+        while (i < 0) {
+            String id = JOptionPane.showInputDialog(this, "Saisir l'ID");
+            if (id.length() > 0) {
+                i++;
+                int updates;
+                int y = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiement faire la modification?",
+                        "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (y == JOptionPane.OK_OPTION) {
+                    updates = new approvisionnementControleur().ajouter(new Approvisionnement(Integer.parseInt(id), qte, pu, pt, fourn, carburant));
+                    if (updates == 1) {
+                        JOptionPane.showMessageDialog(this, "Modifié avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                        afficherVehicules();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Action failed", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_updateAppActionPerformed
+
+    private void deleteappActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteappActionPerformed
+        int ligne = appTable.getSelectedRow();
+        int id = Integer.parseInt(appTable.getValueAt(ligne, 0).toString());
+        int suppression;
+        Approvisionnement approvisionnement = new Approvisionnement();
+        approvisionnement.setApprovisionID(id);
+        int y = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiement faire la suppression ?",
+                "Confirmation", JOptionPane.YES_NO_OPTION);
+        if (y == JOptionPane.OK_OPTION) {
+            suppression = new approvisionnementControleur().supprimer(approvisionnement);
+            if (suppression == 1) {
+                JOptionPane.showMessageDialog(this, "Supprimmé avec succès!", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                afficherVehicules();
+            } else {
+                JOptionPane.showMessageDialog(this, "Echec de suppression", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_deleteappActionPerformed
+
+    private void resetappActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetappActionPerformed
+        appQte.setText("");
+        appPU.setText("");
+        appPT.setText("");
+    }//GEN-LAST:event_resetappActionPerformed
+
+    private void appQteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appQteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_appQteActionPerformed
+
+    private void appPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appPUActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_appPUActionPerformed
+
+    private void appFournActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appFournActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_appFournActionPerformed
+
+    private void switchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchButtonMouseClicked
+        switchTheme();
+    }//GEN-LAST:event_switchButtonMouseClicked
+
+    private void appPUKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_appPUKeyReleased
+        int a = Integer.parseInt(appQte.getText());
+        int b = Integer.parseInt(appPU.getText());
+        int pt = a * b;
+        Integer i = pt;
+        appPT.setText(i.toString());
+    }//GEN-LAST:event_appPUKeyReleased
+    private String tableSomme(int colonneMontant) {
+        int montant = 0;
+        for (int i = 0; i < rapportTable.getRowCount(); i++) {
+            montant = montant + Integer.parseInt(rapportTable.getValueAt(i, colonneMontant).toString());
+        }
+        Integer n = montant;
+        return n.toString();
+    }
     /**
      * @param args the command line arguments
      */
@@ -2947,6 +3359,14 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JButton ajouter1;
     private javax.swing.JButton ajouter2;
     private com.toedter.calendar.JYearChooser annee;
+    private javax.swing.JComboBox appCarburant;
+    private javax.swing.JComboBox<Station> appFourn;
+    private javax.swing.JTextField appPT;
+    private javax.swing.JTextField appPU;
+    private javax.swing.JTextField appQte;
+    private javax.swing.JTable appTable;
+    private javax.swing.JButton approvisionBtn;
+    private javax.swing.JPanel approvisionPanel;
     private javax.swing.JTextField bnidTxt;
     private javax.swing.JButton bonBtn;
     private javax.swing.JComboBox<TypeCarburant> carburantCombo;
@@ -2960,6 +3380,7 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JLabel ddd1;
     private javax.swing.JButton deconnectionbtn;
     private javax.swing.JButton delete;
+    private javax.swing.JButton deleteapp;
     private javax.swing.JTextField demandeID;
     private javax.swing.JPanel demandePanel;
     private javax.swing.JButton demandebtn;
@@ -3033,7 +3454,13 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel60;
+    private javax.swing.JLabel jLabel61;
+    private javax.swing.JLabel jLabel62;
+    private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -3044,6 +3471,7 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
+    private javax.swing.JScrollPane jScrollPane14;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -3080,8 +3508,10 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JButton reset1;
     private javax.swing.JButton reset2;
     private javax.swing.JButton reset3;
+    private javax.swing.JButton resetapp;
     private javax.swing.JButton save;
-    private javax.swing.JButton save1;
+    private javax.swing.JButton saveApp;
+    private javax.swing.JButton saveBon;
     private javax.swing.JComboBox<Service> serviceCombo;
     private javax.swing.JComboBox<Service> serviceCombo1;
     private javax.swing.JComboBox<Service> serviceCombo2;
@@ -3096,6 +3526,7 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JButton supprimer1;
     private javax.swing.JButton supprimer2;
     private javax.swing.JButton supprimer3;
+    private Themes.SwitchButton switchButton;
     private javax.swing.JTable tableBon;
     private javax.swing.JTable tableDemande;
     private javax.swing.JTable tableDemande1;
@@ -3104,8 +3535,9 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JTable tableVehicule;
     private javax.swing.JButton transactionbtn;
     private javax.swing.JButton update;
+    private javax.swing.JButton updateApp;
     private javax.swing.JPanel vehiculePanel;
-    private javax.swing.JTextField vehiculeTxt;
+    private javax.swing.JComboBox<Vehicule> vehiculeTxt;
     private javax.swing.JButton vehiculebtn;
     // End of variables declaration//GEN-END:variables
 }

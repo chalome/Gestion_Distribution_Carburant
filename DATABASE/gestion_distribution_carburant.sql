@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2024 at 10:32 PM
+-- Generation Time: Jun 17, 2024 at 07:05 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.28
 
@@ -21,6 +21,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `gestion_distribution_carburant`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `approvisionnement`
+--
+
+CREATE TABLE `approvisionnement` (
+  `approvisionnementID` int(11) NOT NULL,
+  `approvisionnementQuantite` double NOT NULL,
+  `approvisionnementPU` int(11) NOT NULL,
+  `approvisionnementPT` int(11) NOT NULL,
+  `approvisionnementFournisseur` int(11) NOT NULL,
+  `approvisionnementCarburant` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `approvisionnement`
+--
+
+INSERT INTO `approvisionnement` (`approvisionnementID`, `approvisionnementQuantite`, `approvisionnementPU`, `approvisionnementPT`, `approvisionnementFournisseur`, `approvisionnementCarburant`) VALUES
+(1, 5, 5000, 250000, 6, 3);
 
 -- --------------------------------------------------------
 
@@ -44,9 +66,11 @@ CREATE TABLE `boncarburant` (
 --
 
 INSERT INTO `boncarburant` (`bonCarburantID`, `carburant`, `BonCarburantDate`, `bonCarburantVehicule`, `bonCarburantQuantite`, `autorise_par`, `bonCarburantIDemande`, `bonStation`) VALUES
-(1, 1, '2024-05-23', 1, 40, 2, 2, 'King Star'),
+(1, 3, '2024-05-23', 1, 45, 2, 2, 'kobil'),
 (2, 1, '2024-05-23', 3, 45, 2, 3, 'kobil'),
-(3, 2, '2024-06-03', 2, 25, 12, 1, 'muco');
+(5, 2, '2024-06-17', 2, 25, 12, 1, 'Interpetrol'),
+(7, 4, '2024-06-17', 4, 20, 12, 4, 'Interpetrol'),
+(8, 3, '2024-06-17', 1, 35, 12, 5, 'Interpetrol');
 
 -- --------------------------------------------------------
 
@@ -116,7 +140,9 @@ CREATE TABLE `demande` (
 INSERT INTO `demande` (`demandeID`, `demandeQuantite`, `demandeService`, `demandeMotif`, `demandeDate`, `demandeEtat`, `demandeVehicule`) VALUES
 (1, 25, 2, 'voyage ', '2024-05-22', 1, 'A202'),
 (2, 40, 2, 'voyage pour mission....', '2024-05-23', 1, 'A1999'),
-(3, 45, 1, 'voyage....', '2024-05-23', 1, 'B1923');
+(3, 45, 1, 'voyage....', '2024-05-23', 1, 'B1923'),
+(4, 20, 1, 'transport des materiels', '2024-06-17', 1, 'A3456'),
+(5, 30, 1, 'deplacement', '2024-06-17', 1, 'A1999');
 
 -- --------------------------------------------------------
 
@@ -165,7 +191,8 @@ INSERT INTO `employe` (`employeID`, `employeMatricule`, `employeNom`, `employePr
 (10, '0003/2024', 'NIYUKURI', 'Didier', 'Kayanza', 3, 1, '78695040'),
 (11, '0004/2024', 'BUKURU', 'Etienne', 'Kinindo', 1, 5, '67564738'),
 (12, '0005/2024', 'RUKUNDO', 'Eric', 'Rohero', 2, 6, '78940304'),
-(13, '0006/2024', 'BUKEYENEZA', 'Aimable', 'Ngozi', 2, 5, '67890543');
+(13, '0006/2024', 'BUKEYENEZA', 'Aimable', 'Ngozi', 2, 5, '67890543'),
+(15, '0007/2024', 'NIYONKURU', 'Mechack', 'rurale', 4, 2, '68897065');
 
 -- --------------------------------------------------------
 
@@ -228,7 +255,8 @@ INSERT INTO `service` (`serviceID`, `serviceNom`) VALUES
 (1, 'CAOD'),
 (2, 'Cabinet du ministere'),
 (3, 'Pas de service'),
-(4, 'informatique');
+(4, 'informatique'),
+(5, 'reseaux');
 
 -- --------------------------------------------------------
 
@@ -252,7 +280,8 @@ INSERT INTO `station` (`stationID`, `stationNIF`, `stationRC`, `stationNom`, `st
 (1, '8594/ut/4981', 'registre', 'King Star', 'kanyosha'),
 (3, '5649/5784/BU', 'REG', 'kobil', 'ruziba'),
 (4, '0483/nif', 'reg', 'muco', 'kanyosha'),
-(5, '043/2024/Nif', 'register', 'fuel station', 'kinindo');
+(5, '043/2024/Nif', 'register', 'fuel station', 'kinindo'),
+(6, '0904/4932', '5743', 'Interpetrol', 'rohero');
 
 -- --------------------------------------------------------
 
@@ -277,8 +306,9 @@ CREATE TABLE `transaction` (
 
 INSERT INTO `transaction` (`transactionID`, `transactionQuantite`, `transactionPrixUnitaire`, `transactionPrixTotal`, `transactionDate`, `transactionBonCommande`, `transactionStation`, `transactionService`) VALUES
 (1, 40, 4000, 160000, '2024-05-23', 1, 1, 2),
-(2, 45, 4500, 202500, '2024-06-02', 2, 1, 2),
-(3, 25, 5000, 125000, '2024-06-03', 3, 4, 1);
+(2, 45, 3500, 157500, '2024-06-02', 2, 3, 2),
+(4, 20, 5000, 100000, '2024-06-17', 7, 6, 1),
+(5, 35, 5500, 192500, '2024-06-17', 8, 6, 2);
 
 -- --------------------------------------------------------
 
@@ -305,11 +335,19 @@ INSERT INTO `vehicule` (`vehiculeID`, `vehiculePlaque`, `vehiculeModele`, `vehic
 (1, 'A1999', 1, 2020, 3, 20, 2, 2),
 (2, 'A2020', 2, 2019, 2, 20, 2, 10),
 (3, 'B1923', 2, 2022, 3, 20, 1, 10),
-(4, 'A3456', 5, 2021, 4, 20, 1, 9);
+(4, 'A3456', 5, 2021, 4, 20, 1, 9),
+(6, 'G2023', 6, 2023, 4, 20, 1, 9);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `approvisionnement`
+--
+ALTER TABLE `approvisionnement`
+  ADD PRIMARY KEY (`approvisionnementID`),
+  ADD KEY `approvisionnementCarburant` (`approvisionnementCarburant`);
 
 --
 -- Indexes for table `boncarburant`
@@ -403,10 +441,16 @@ ALTER TABLE `vehicule`
 --
 
 --
+-- AUTO_INCREMENT for table `approvisionnement`
+--
+ALTER TABLE `approvisionnement`
+  MODIFY `approvisionnementID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `boncarburant`
 --
 ALTER TABLE `boncarburant`
-  MODIFY `bonCarburantID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `bonCarburantID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `carburant`
@@ -424,7 +468,7 @@ ALTER TABLE `categorieemploye`
 -- AUTO_INCREMENT for table `demande`
 --
 ALTER TABLE `demande`
-  MODIFY `demandeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `demandeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `demandeetat`
@@ -436,7 +480,7 @@ ALTER TABLE `demandeetat`
 -- AUTO_INCREMENT for table `employe`
 --
 ALTER TABLE `employe`
-  MODIFY `employeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `employeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `modele`
@@ -454,29 +498,35 @@ ALTER TABLE `rapport`
 -- AUTO_INCREMENT for table `service`
 --
 ALTER TABLE `service`
-  MODIFY `serviceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `serviceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `station`
 --
 ALTER TABLE `station`
-  MODIFY `stationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `stationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `transactionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `transactionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `vehicule`
 --
 ALTER TABLE `vehicule`
-  MODIFY `vehiculeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `vehiculeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `approvisionnement`
+--
+ALTER TABLE `approvisionnement`
+  ADD CONSTRAINT `approvisionnement_ibfk_1` FOREIGN KEY (`approvisionnementCarburant`) REFERENCES `carburant` (`carburantID`);
 
 --
 -- Constraints for table `boncarburant`

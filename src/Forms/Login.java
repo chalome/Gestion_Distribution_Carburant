@@ -1,18 +1,43 @@
-
 package Forms;
 
 import Controleurs.LoginControleur;
 import Modeles.Employe;
+import Themes.ThemesControl;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
+import com.formdev.flatlaf.intellijthemes.FlatAllIJThemes;
+import com.formdev.flatlaf.intellijthemes.FlatGradiantoNatureGreenIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialDarkerContrastIJTheme;
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import java.awt.Font;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 public class Login extends javax.swing.JFrame {
+
+    private boolean isDarkTheme = false;
 
     public Login() {
         initComponents();
         setResizable(false);
         setIconImage(new ImageIcon(getClass().getResource("/icones/pic2.jpg")).getImage());
         setTitle("Login page");
+        
+    }
+
+    public void switchTheme() {
+        if (isDarkTheme) {
+            new ThemesControl().setLightTheme();
+        } else {
+            new ThemesControl().setDarkTheme();
+        }
+        SwingUtilities.updateComponentTreeUI(this);
+        isDarkTheme = !isDarkTheme;
     }
 
     @SuppressWarnings("unchecked")
@@ -26,6 +51,7 @@ public class Login extends javax.swing.JFrame {
         conBtn = new javax.swing.JButton();
         passwordTxt = new javax.swing.JPasswordField();
         jCheckBox1 = new javax.swing.JCheckBox();
+        switchButton = new Themes.SwitchButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,11 +86,16 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        switchButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                switchButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -82,13 +113,19 @@ public class Login extends javax.swing.JFrame {
                                         .addComponent(usernameTxt))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(258, 258, 258)
-                        .addComponent(jCheckBox1)))
-                .addGap(210, 210, 210))
+                        .addComponent(jCheckBox1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(switchButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(switchButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(87, 87, 87)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -120,27 +157,31 @@ public class Login extends javax.swing.JFrame {
                 new AdminForm(username).setVisible(true);
             } else if (controleur.isGestionnaire(username)) {
                 super.dispose();
-                 new AdminForm(username).setVisible(true);
-                 
+                new AdminForm(username).setVisible(true);
+
             } else if (controleur.isChefService(username)) {
                 super.dispose();
-                 new AdminForm(username).setVisible(true);
+                new AdminForm(username).setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(this, "Tu n'es ni Admin,ni Gestionnaire, ni chaf de service", "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Tu n'es ni Admin,ni Gestionnaire, ni chef de service", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Echec de connexion,Verifie le mot de passe ou le nom d'utilisateur", "Erreur", JOptionPane.ERROR_MESSAGE);
-           
+
         }
     }//GEN-LAST:event_conBtnActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        if(jCheckBox1.isSelected()){
-            passwordTxt.setEchoChar((char)0);
-        }else{
+        if (jCheckBox1.isSelected()) {
+            passwordTxt.setEchoChar((char) 0);
+        } else {
             passwordTxt.setEchoChar('*');
         }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void switchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchButtonMouseClicked
+        switchTheme();
+    }//GEN-LAST:event_switchButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -169,7 +210,11 @@ public class Login extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+//        FlatSolarizedDarkIJTheme.setup();
+//        FlatGradiantoNatureGreenIJTheme.setup();
+//        FlatMaterialDarkerContrastIJTheme.setup();
+          FlatLightFlatIJTheme.setup();
+//        FlatLightFlatIJTheme.setup();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -185,6 +230,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField passwordTxt;
+    private Themes.SwitchButton switchButton;
     private javax.swing.JTextField usernameTxt;
     // End of variables declaration//GEN-END:variables
 }

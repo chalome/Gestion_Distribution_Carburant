@@ -18,15 +18,16 @@ public class BonCarburantControleur extends Commun implements IBonCommande {
     private PreparedStatement pst;
     private ResultSet res;
     private static final String INSERT = "INSERT INTO bonCarburant(carburant,bonCarburantVehicule,autorise_par,bonCarburantIDemande,bonCarburantQuantite,bonStation) VALUES(?,?,?,?,?,?)";
-    private static final String UPDATE = "UPDATE boncommande SET carburant=?,bonCarburantVehicule=?,autorise_par=?,bonCarburantIDemande=?,bonCarburantQuantite=?,bonStation=? WHERE bonCarburantID =?";
+    private static final String UPDATE = "UPDATE bonCarburant SET carburant=?,bonCarburantVehicule=?,autorise_par=?,bonCarburantIDemande=?,bonCarburantQuantite=?,bonStation=? WHERE bonCarburantID =?";
     private static final String DELETE = "DELETE FROM bonCarburant WHERE bonCarburantID =?";
-    private static final String SELECT_ALL = "SELECT bonCarburantID,carburantNom as carburants,bonCarburantIDemande,BonCarburantDate,concat(employeNom,' ',employePrenom) as nom,vehiculePlaque as vehicule,bonCarburantQuantite,bonStation FROM boncarburant,vehicule,employe,carburant where bonCarburantID=vehiculeID and autorise_par=employeID and carburant=carburantID";
+    private static final String SELECT_ALL = "SELECT bonCarburantID,carburantNom as carburants,bonCarburantIDemande,BonCarburantDate,concat(employeNom,' ',employePrenom) as nom,vehiculePlaque as vehicule,bonCarburantQuantite,bonStation FROM boncarburant,vehicule,employe,carburant where bonCarburantVehicule=vehiculeID and autorise_par=employeID and carburant=carburantID";
 
     public BonCarburantControleur() {
     }
 
     @Override
     public boolean dejaExist(String text) {
+        connection = getConnection();
         String requete = "select * from bonCarburant where bonCarburantID=?";
         try {
             pst = connection.prepareStatement(requete);
@@ -95,7 +96,7 @@ public class BonCarburantControleur extends Commun implements IBonCommande {
             pst.setInt(4, bonCommande.getBonDemandeID());
             pst.setDouble(5, bonCommande.getBonQuantite());
             pst.setString(6, bonCommande.getBonStation());
-            pst.setInt(6, bonCommande.getBonCarburantID());
+            pst.setInt(7, bonCommande.getBonCarburantID());
             modifier = pst.executeUpdate();
             return modifier;
         } catch (Exception e) {
@@ -159,6 +160,7 @@ public class BonCarburantControleur extends Commun implements IBonCommande {
         }
         return carburant;
     }
+
     public String afficherQuantite(String id) {
         String quantite = "";
         connection = getConnection();
