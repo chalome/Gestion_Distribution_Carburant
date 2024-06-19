@@ -77,11 +77,11 @@ public class DemandeControleur extends ADemande {
 
     @Override
     public boolean dejaExist(String text) {
-       connection = getConnection();
+        connection = getConnection();
         try {
-            pst = connection.prepareStatement("SELECT * FROM demande WHERE demandeID="+text);
-            res=pst.executeQuery();
-            while(res.next()){
+            pst = connection.prepareStatement("SELECT * FROM demande WHERE demandeID=" + text);
+            res = pst.executeQuery();
+            while (res.next()) {
                 return true;
             }
         } catch (Exception e) {
@@ -128,5 +128,36 @@ public class DemandeControleur extends ADemande {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
+    }
+
+    public int refuser(int id) {
+        String SQL = "UPDATE demande SET demandeEtat=2 WHERE demandeID=" + id;
+        connection = getConnection();
+        int refus = 0;
+        try {
+            pst = connection.prepareStatement(SQL);
+            refus = pst.executeUpdate();
+            return refus;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return refus;
+    }
+
+    public int nombreDemande(int type) {
+        int nombre = 0;
+        String sql = "select count(demandeID)as nombre from demande where demandeEtat=" + type;
+        connection = getConnection();
+        try {
+            pst = connection.prepareStatement(sql);
+            res = pst.executeQuery();
+            while (res.next()) {
+                nombre = res.getInt("nombre");
+                return nombre;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return nombre;
     }
 }

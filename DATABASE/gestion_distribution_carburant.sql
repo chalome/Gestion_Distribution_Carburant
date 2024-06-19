@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2024 at 07:56 PM
+-- Generation Time: Jun 20, 2024 at 12:53 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.28
 
@@ -42,7 +42,7 @@ CREATE TABLE `approvisionnement` (
 --
 
 INSERT INTO `approvisionnement` (`approvisionnementID`, `approvisionnementQuantite`, `approvisionnementPU`, `approvisionnementPT`, `approvisionnementFournisseur`, `approvisionnementCarburant`) VALUES
-(1, 0, 0, 0, 6, 3);
+(1, 100, 5000, 500000, 6, 3);
 
 -- --------------------------------------------------------
 
@@ -138,9 +138,9 @@ CREATE TABLE `demande` (
 --
 
 INSERT INTO `demande` (`demandeID`, `demandeQuantite`, `demandeService`, `demandeMotif`, `demandeDate`, `demandeEtat`, `demandeVehicule`) VALUES
-(1, 25, 2, 'voyage ', '2024-05-22', 1, 'A202'),
-(2, 40, 2, 'voyage pour mission....', '2024-05-23', 1, 'A1999'),
-(3, 45, 1, 'voyage....', '2024-05-23', 1, 'B1923'),
+(1, 25, 2, 'voyage ', '2024-05-22', 3, 'A202'),
+(2, 40, 2, 'voyage pour mission....', '2024-05-23', 2, 'A1999'),
+(3, 45, 1, 'voyage....', '2024-05-23', 2, 'B1923'),
 (4, 20, 1, 'transport des materiels', '2024-06-17', 1, 'A3456'),
 (5, 30, 1, 'deplacement', '2024-06-17', 1, 'A1999');
 
@@ -529,49 +529,10 @@ ALTER TABLE `approvisionnement`
   ADD CONSTRAINT `approvisionnement_ibfk_1` FOREIGN KEY (`approvisionnementCarburant`) REFERENCES `carburant` (`carburantID`);
 
 --
--- Constraints for table `boncarburant`
---
-ALTER TABLE `boncarburant`
-  ADD CONSTRAINT `boncarburant_ibfk_1` FOREIGN KEY (`bonCarburantVehicule`) REFERENCES `vehicule` (`vehiculeID`),
-  ADD CONSTRAINT `boncarburant_ibfk_2` FOREIGN KEY (`autorise_par`) REFERENCES `employe` (`employeID`),
-  ADD CONSTRAINT `boncarburant_ibfk_3` FOREIGN KEY (`carburant`) REFERENCES `carburant` (`carburantID`),
-  ADD CONSTRAINT `boncarburant_ibfk_4` FOREIGN KEY (`bonCarburantIDemande`) REFERENCES `demande` (`demandeID`);
-
---
--- Constraints for table `demande`
---
-ALTER TABLE `demande`
-  ADD CONSTRAINT `demande_ibfk_1` FOREIGN KEY (`demandeService`) REFERENCES `service` (`serviceID`),
-  ADD CONSTRAINT `demande_ibfk_2` FOREIGN KEY (`demandeEtat`) REFERENCES `demandeetat` (`demandeEtatID`);
-
---
--- Constraints for table `employe`
---
-ALTER TABLE `employe`
-  ADD CONSTRAINT `employe_ibfk_1` FOREIGN KEY (`employeCategorie`) REFERENCES `categorieemploye` (`CategorieEmployeID`),
-  ADD CONSTRAINT `employe_ibfk_2` FOREIGN KEY (`employeService`) REFERENCES `service` (`serviceID`);
-
---
 -- Constraints for table `rapport`
 --
 ALTER TABLE `rapport`
   ADD CONSTRAINT `rapport_ibfk_1` FOREIGN KEY (`rapportTransaction`) REFERENCES `transaction` (`transactionID`);
-
---
--- Constraints for table `transaction`
---
-ALTER TABLE `transaction`
-  ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`transactionBonCommande`) REFERENCES `boncarburant` (`bonCarburantID`),
-  ADD CONSTRAINT `transaction_ibfk_2` FOREIGN KEY (`transactionStation`) REFERENCES `station` (`stationID`);
-
---
--- Constraints for table `vehicule`
---
-ALTER TABLE `vehicule`
-  ADD CONSTRAINT `vehicule_ibfk_1` FOREIGN KEY (`vehiculeChauffeur`) REFERENCES `employe` (`employeID`),
-  ADD CONSTRAINT `vehicule_ibfk_2` FOREIGN KEY (`vehiculeModele`) REFERENCES `modele` (`modeleID`),
-  ADD CONSTRAINT `vehicule_ibfk_3` FOREIGN KEY (`vehiculeTypeCarburant`) REFERENCES `carburant` (`carburantID`),
-  ADD CONSTRAINT `vehicule_ibfk_4` FOREIGN KEY (`vehiculeService`) REFERENCES `service` (`serviceID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

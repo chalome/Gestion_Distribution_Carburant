@@ -23,8 +23,11 @@ import Modeles.Station;
 import Modeles.Transaction;
 import Modeles.TypeCarburant;
 import Modeles.Vehicule;
+import Themes.ModelPieChart;
+import Themes.PieChart;
 import Themes.ThemesControl;
 import com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme;
+import java.awt.Color;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -33,6 +36,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.HeadlessException;
 import java.awt.print.PrinterException;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.attribute.HashPrintRequestAttributeSet;
@@ -40,6 +45,7 @@ import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.OrientationRequested;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 public class AdminForm extends javax.swing.JFrame {
 
@@ -47,8 +53,11 @@ public class AdminForm extends javax.swing.JFrame {
 
     public AdminForm(String nom) {
         initComponents();
+        init();
+        time();
         setResizable(false);
         session.setText(nom);
+        userConnected.setText(nom);
         afficheCategorieServices();
         afficherEmployes();
         afficherDemandes();
@@ -335,7 +344,12 @@ public class AdminForm extends javax.swing.JFrame {
         Home = new javax.swing.JPanel();
         jLabel53 = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
+        pieChart1 = new Themes.PieChart();
+        timeLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        quantiteStock = new javax.swing.JLabel();
+        jLabel64 = new javax.swing.JLabel();
+        userConnected = new javax.swing.JLabel();
         EmployePanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -496,6 +510,7 @@ public class AdminForm extends javax.swing.JFrame {
         jScrollPane10 = new javax.swing.JScrollPane();
         tableBon = new javax.swing.JTable();
         jLabel57 = new javax.swing.JLabel();
+        refuser = new javax.swing.JButton();
         approvisionPanel = new javax.swing.JPanel();
         appQte = new javax.swing.JTextField();
         jLabel58 = new javax.swing.JLabel();
@@ -697,10 +712,27 @@ public class AdminForm extends javax.swing.JFrame {
         jLabel54.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel54.setText("Application pour la Gestion des bons de carburant cas du MFBP");
-        Home.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 192, 896, 31));
+        Home.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 896, 31));
+        Home.add(pieChart1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 380, 310));
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Home.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 600));
+        timeLabel.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        timeLabel.setForeground(new java.awt.Color(0, 102, 102));
+        Home.add(timeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 320, 30));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Quantité en stock:");
+        Home.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 190, 120, 30));
+
+        quantiteStock.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        quantiteStock.setForeground(new java.awt.Color(0, 102, 102));
+        Home.add(quantiteStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 190, 170, 30));
+
+        jLabel64.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel64.setText("Utilisateur connecté:");
+        Home.add(jLabel64, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 434, 130, 30));
+
+        userConnected.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Home.add(userConnected, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 440, 150, 30));
 
         MainPanel.add(Home, "card10");
 
@@ -1965,7 +1997,7 @@ public class AdminForm extends javax.swing.JFrame {
         });
 
         saveBon.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        saveBon.setText("Enregister");
+        saveBon.setText("Approuver");
         saveBon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveBonActionPerformed(evt);
@@ -2032,65 +2064,78 @@ public class AdminForm extends javax.swing.JFrame {
 
         jLabel57.setText("Liste des bons");
 
+        refuser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        refuser.setText("Refuser");
+        refuser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refuserActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout BonPanelLayout = new javax.swing.GroupLayout(BonPanel);
         BonPanel.setLayout(BonPanelLayout);
         BonPanelLayout.setHorizontalGroup(
             BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BonPanelLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
                 .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(BonPanelLayout.createSequentialGroup()
-                        .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(BonPanelLayout.createSequentialGroup()
-                                    .addComponent(jLabel40)
-                                    .addGap(12, 12, 12)
-                                    .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(VehiculeCombo, 0, 178, Short.MAX_VALUE)
-                                        .addComponent(demandeID)))
-                                .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(BonPanelLayout.createSequentialGroup()
-                                    .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(carburantText, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                                        .addComponent(qteTxt2)))
-                                .addGroup(BonPanelLayout.createSequentialGroup()
-                                    .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(stationCombo1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(BonPanelLayout.createSequentialGroup()
-                                    .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(delete)
-                                        .addComponent(saveBon))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(update, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                                        .addComponent(reset2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGroup(BonPanelLayout.createSequentialGroup()
-                                    .addGap(4, 4, 4)
-                                    .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(employeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(28, 28, 28)
                         .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(BonPanelLayout.createSequentialGroup()
-                                .addGap(202, 202, 202)
-                                .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(BonPanelLayout.createSequentialGroup()
+                                            .addComponent(jLabel40)
+                                            .addGap(12, 12, 12)
+                                            .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(VehiculeCombo, 0, 178, Short.MAX_VALUE)
+                                                .addComponent(demandeID)))
+                                        .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(BonPanelLayout.createSequentialGroup()
+                                            .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(18, 18, 18)
+                                            .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(carburantText, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                                                .addComponent(qteTxt2)))
+                                        .addGroup(BonPanelLayout.createSequentialGroup()
+                                            .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(stationCombo1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(BonPanelLayout.createSequentialGroup()
+                                            .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(delete)
+                                                .addComponent(saveBon))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(update, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                                .addComponent(reset2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addGroup(BonPanelLayout.createSequentialGroup()
+                                            .addGap(4, 4, 4)
+                                            .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(employeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(BonPanelLayout.createSequentialGroup()
+                                        .addGap(202, 202, 202)
+                                        .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(BonPanelLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 639, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(BonPanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 639, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(153, 153, 153)
+                                .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(BonPanelLayout.createSequentialGroup()
+                                        .addGap(247, 247, 247)
+                                        .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 930, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(BonPanelLayout.createSequentialGroup()
-                        .addGap(153, 153, 153)
-                        .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(BonPanelLayout.createSequentialGroup()
-                                .addGap(247, 247, 247)
-                                .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 930, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(117, 117, 117)
+                        .addComponent(refuser, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
         BonPanelLayout.setVerticalGroup(
             BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2116,7 +2161,7 @@ public class AdminForm extends javax.swing.JFrame {
                                 .addComponent(carburantText, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(qteTxt2, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                                    .addComponent(qteTxt2)
                                     .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -2127,20 +2172,22 @@ public class AdminForm extends javax.swing.JFrame {
                             .addComponent(employeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel45))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(update, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(saveBon, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(saveBon, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(update, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(reset2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(17, 17, 17))
+                        .addGroup(BonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(reset2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(refuser)
+                        .addGap(13, 13, 13))
                     .addGroup(BonPanelLayout.createSequentialGroup()
                         .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGap(10, 10, 10)
                         .addComponent(jLabel57)
-                        .addGap(11, 11, 11)))
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
+                        .addGap(36, 36, 36)))
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         MainPanel.add(BonPanel, "card9");
@@ -2661,14 +2708,14 @@ public class AdminForm extends javax.swing.JFrame {
         } else if (Integer.parseInt(qteTxt.getText()) > Integer.parseInt(new approvisionnementControleur().afficherQuantite())) {
             JOptionPane.showMessageDialog(this, "Il reste " + new approvisionnementControleur().afficherQuantite() + " litres en stock", "Erreur", JOptionPane.ERROR_MESSAGE);
         } else {
-//            ajout = new TransactionControleur().create(new Transaction(qte, pu, pt, bon, station, service));
-//            if (ajout == 1) {
-//                new approvisionnementControleur().modifier(qte);
-//                JOptionPane.showMessageDialog(this, "Enregistrement Reussi", "Success", JOptionPane.INFORMATION_MESSAGE);
-//                afficherTransactions();
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Echec d'enregistrement", "Erreur!", JOptionPane.ERROR_MESSAGE);
-//            }
+            ajout = new TransactionControleur().create(new Transaction(qte, pu, pt, bon, station, service));
+            if (ajout == 1) {
+                new approvisionnementControleur().modifier(qte);
+                JOptionPane.showMessageDialog(this, "Enregistrement Reussi", "Success", JOptionPane.INFORMATION_MESSAGE);
+                afficherTransactions();
+            } else {
+                JOptionPane.showMessageDialog(this, "Echec d'enregistrement", "Erreur!", JOptionPane.ERROR_MESSAGE);
+            }
             JOptionPane.showMessageDialog(this, "nice", "Success", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_saveActionPerformed
@@ -3303,6 +3350,25 @@ public class AdminForm extends javax.swing.JFrame {
         Integer i = pt;
         appPT.setText(i.toString());
     }//GEN-LAST:event_appPUKeyReleased
+
+    private void refuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refuserActionPerformed
+        int ligne = tableDemande1.getSelectedRow();
+        int id = Integer.parseInt(tableDemande1.getValueAt(ligne, 0).toString());
+        int suppression;
+        Demande demande =new Demande();
+        demande.setDemandeID(id);
+        int y = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiement faire le refus ?",
+                "Confirmation", JOptionPane.YES_NO_OPTION);
+        if (y == JOptionPane.OK_OPTION) {
+            suppression = new DemandeControleur().refuser(id);
+            if (suppression == 1) {
+                JOptionPane.showMessageDialog(this, "La demande est refusée avec succès!", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                afficherDemandes();
+            } else {
+                JOptionPane.showMessageDialog(this, "Echec de refus", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_refuserActionPerformed
     private String tableSomme(int colonneMontant) {
         int montant = 0;
         for (int i = 0; i < rapportTable.getRowCount(); i++) {
@@ -3468,6 +3534,7 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel63;
+    private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -3502,15 +3569,18 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JTextField nomTxt;
     private javax.swing.JButton okbtn;
     private javax.swing.JButton okbtn1;
+    private Themes.PieChart pieChart1;
     private javax.swing.JTextField plaque;
     private javax.swing.JTextField ptTxt;
     private javax.swing.JTextField puTxt;
     private javax.swing.JTextField qteTxt;
     private javax.swing.JTextField qteTxt1;
     private javax.swing.JTextField qteTxt2;
+    private javax.swing.JLabel quantiteStock;
     private javax.swing.JTable rapportTable;
     private javax.swing.JButton rapportbtn;
     private javax.swing.JTextField rcTxt;
+    private javax.swing.JButton refuser;
     private javax.swing.JButton reset;
     private javax.swing.JButton reset1;
     private javax.swing.JButton reset2;
@@ -3540,11 +3610,30 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JTable tableStation;
     private javax.swing.JTable tableTransaction;
     private javax.swing.JTable tableVehicule;
+    private javax.swing.JLabel timeLabel;
     private javax.swing.JButton transactionbtn;
     private javax.swing.JButton update;
     private javax.swing.JButton updateApp;
+    private javax.swing.JLabel userConnected;
     private javax.swing.JPanel vehiculePanel;
     private javax.swing.JComboBox<Vehicule> vehiculeTxt;
     private javax.swing.JButton vehiculebtn;
     // End of variables declaration//GEN-END:variables
+private void init() {
+        DemandeControleur controleur = new DemandeControleur();
+        quantiteStock.setText(new approvisionnementControleur().afficherQuantite() + " litres");
+        pieChart1.setChartType(PieChart.PeiChartType.DONUT_CHART);
+        pieChart1.addData(new ModelPieChart("Demandes en attentes", controleur.nombreDemande(3), new Color(23, 126, 238)));
+        pieChart1.addData(new ModelPieChart("Demandes refusées", controleur.nombreDemande(2), new Color(221, 65, 65)));
+        pieChart1.addData(new ModelPieChart("Demandes approuvées", controleur.nombreDemande(1), new Color(47, 157, 64)));
+    }
+
+    private void time() {
+        Timer timer = new Timer(1000, e -> {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            String time = sdf.format(new Date());
+            timeLabel.setText(time);
+        });
+        timer.start();
+    }
 }
