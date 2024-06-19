@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2024 at 07:05 PM
+-- Generation Time: Jun 19, 2024 at 07:56 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.28
 
@@ -42,7 +42,7 @@ CREATE TABLE `approvisionnement` (
 --
 
 INSERT INTO `approvisionnement` (`approvisionnementID`, `approvisionnementQuantite`, `approvisionnementPU`, `approvisionnementPT`, `approvisionnementFournisseur`, `approvisionnementCarburant`) VALUES
-(1, 5, 5000, 250000, 6, 3);
+(1, 0, 0, 0, 6, 3);
 
 -- --------------------------------------------------------
 
@@ -111,10 +111,10 @@ CREATE TABLE `categorieemploye` (
 
 INSERT INTO `categorieemploye` (`CategorieEmployeID`, `CategorieEmployeNom`) VALUES
 (1, 'Chauffeur'),
-(2, 'Chef de service'),
+(2, 'Agent'),
 (3, 'Simple employe'),
 (4, 'Pas de servive'),
-(5, 'Gestionnaire'),
+(5, 'Chef charroi'),
 (6, 'Admin');
 
 -- --------------------------------------------------------
@@ -444,7 +444,7 @@ ALTER TABLE `vehicule`
 -- AUTO_INCREMENT for table `approvisionnement`
 --
 ALTER TABLE `approvisionnement`
-  MODIFY `approvisionnementID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `approvisionnementID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `boncarburant`

@@ -80,23 +80,33 @@ public class AdminForm extends javax.swing.JFrame {
     }
 
     void qui(String nom) {
-        if (new LoginControleur().isGestionnaire(nom)) {
+        if (new LoginControleur().isCharroi(nom)) {
             employebtn.setVisible(false);
-            rapportbtn.setVisible(false);
-            stationbtn.setVisible(false);
+//            rapportbtn.setVisible(false);
+//            stationbtn.setVisible(false);
             multibtn.setVisible(false);
             vehiculebtn.setVisible(false);
+//            approvisionBtn.setVisible(false);
+            bonBtn.setVisible(false);
+            multibtn.setVisible(false);
+            employebtn.setVisible(false);
+            transactionbtn.setVisible(false);
 //    transactionbtn;;;;
+
             demandebtn.setVisible(false);
 //    bonBtn;;;;
-        } else if (new LoginControleur().isChefService(nom)) {
+        } else if (new LoginControleur().isAgent(nom)) {
             employebtn.setVisible(false);
             rapportbtn.setVisible(false);
             stationbtn.setVisible(false);
             multibtn.setVisible(false);
-            vehiculebtn.setVisible(false);
-            transactionbtn.setVisible(false);
-            bonBtn.setVisible(false);
+            employebtn.setVisible(false);
+            rapportbtn.setVisible(false);
+            stationbtn.setVisible(false);
+//            vehiculebtn.setVisible(false);
+//            transactionbtn.setVisible(false);
+//            bonBtn.setVisible(false);
+            approvisionBtn.setVisible(false);
         }
     }
 
@@ -512,7 +522,7 @@ public class AdminForm extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         employebtn.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        employebtn.setText("Employé");
+        employebtn.setText("Utilisateur");
         employebtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 employebtnActionPerformed(evt);
@@ -591,12 +601,12 @@ public class AdminForm extends javax.swing.JFrame {
             }
         });
 
-        session.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        session.setForeground(new java.awt.Color(0, 153, 51));
+        session.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        session.setForeground(new java.awt.Color(255, 255, 255));
         session.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         session1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        session1.setForeground(new java.awt.Color(0, 153, 51));
+        session1.setForeground(new java.awt.Color(255, 255, 255));
         session1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         session1.setText("est connecté");
 
@@ -645,9 +655,9 @@ public class AdminForm extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(session, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(session1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(session1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(homebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(employebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -680,19 +690,16 @@ public class AdminForm extends javax.swing.JFrame {
         Home.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel53.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel53.setForeground(new java.awt.Color(255, 255, 255));
         jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel53.setText("Page d'acceuil");
         Home.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 916, 31));
 
         jLabel54.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel54.setForeground(new java.awt.Color(255, 255, 255));
         jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel54.setText("Application pour la Gestion des bons de carburant cas du MFBP");
         Home.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 192, 896, 31));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/bg1.jpg"))); // NOI18N
         Home.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 600));
 
         MainPanel.add(Home, "card10");
@@ -1181,7 +1188,7 @@ public class AdminForm extends javax.swing.JFrame {
         jLabel16.setText("Service");
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel17.setText("Plaque:");
+        jLabel17.setText("Nom:");
 
         serviceText.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
@@ -1202,7 +1209,7 @@ public class AdminForm extends javax.swing.JFrame {
         jScrollPane2.setViewportView(listService);
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel18.setText("Modele:");
+        jLabel18.setText("Nom:");
 
         modeleText.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
@@ -2662,7 +2669,7 @@ public class AdminForm extends javax.swing.JFrame {
 //            } else {
 //                JOptionPane.showMessageDialog(this, "Echec d'enregistrement", "Erreur!", JOptionPane.ERROR_MESSAGE);
 //            }
-             JOptionPane.showMessageDialog(this, "nice", "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "nice", "Success", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_saveActionPerformed
 
@@ -3213,7 +3220,7 @@ public class AdminForm extends javax.swing.JFrame {
             ajout = new approvisionnementControleur().ajouter(new Approvisionnement(qte, pu, pt, fourn, carburant));
             if (ajout == 1) {
                 JOptionPane.showMessageDialog(this, "Enregistrement Reussi", "Success", JOptionPane.INFORMATION_MESSAGE);
-                afficherStation();
+                afficherApprovisions();
             } else {
                 JOptionPane.showMessageDialog(this, "Echec d'enregistrement", "Erreur!", JOptionPane.ERROR_MESSAGE);
             }
@@ -3236,10 +3243,10 @@ public class AdminForm extends javax.swing.JFrame {
                 int y = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiement faire la modification?",
                         "Confirmation", JOptionPane.YES_NO_OPTION);
                 if (y == JOptionPane.OK_OPTION) {
-                    updates = new approvisionnementControleur().ajouter(new Approvisionnement(Integer.parseInt(id), qte, pu, pt, fourn, carburant));
+                    updates = new approvisionnementControleur().modifier(new Approvisionnement(Integer.parseInt(id), qte, pu, pt, fourn, carburant));
                     if (updates == 1) {
                         JOptionPane.showMessageDialog(this, "Modifié avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                        afficherVehicules();
+                        afficherApprovisions();
                     } else {
                         JOptionPane.showMessageDialog(this, "Action failed", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -3260,7 +3267,7 @@ public class AdminForm extends javax.swing.JFrame {
             suppression = new approvisionnementControleur().supprimer(approvisionnement);
             if (suppression == 1) {
                 JOptionPane.showMessageDialog(this, "Supprimmé avec succès!", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                afficherVehicules();
+                afficherApprovisions();
             } else {
                 JOptionPane.showMessageDialog(this, "Echec de suppression", "Erreur", JOptionPane.ERROR_MESSAGE);
             }

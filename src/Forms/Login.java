@@ -3,20 +3,11 @@ package Forms;
 import Controleurs.LoginControleur;
 import Modeles.Employe;
 import Themes.ThemesControl;
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
-import com.formdev.flatlaf.intellijthemes.FlatAllIJThemes;
-import com.formdev.flatlaf.intellijthemes.FlatGradiantoNatureGreenIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme;
-import com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme;
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialDarkerContrastIJTheme;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import java.awt.Font;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+
 
 public class Login extends javax.swing.JFrame {
 
@@ -155,11 +146,11 @@ public class Login extends javax.swing.JFrame {
             if (controleur.isAdmin(username)) {
                 super.dispose();
                 new AdminForm(username).setVisible(true);
-            } else if (controleur.isGestionnaire(username)) {
+            } else if (controleur.isCharroi(username)) {
                 super.dispose();
                 new AdminForm(username).setVisible(true);
 
-            } else if (controleur.isChefService(username)) {
+            } else if (controleur.isAgent(username)) {
                 super.dispose();
                 new AdminForm(username).setVisible(true);
             } else {
@@ -210,11 +201,7 @@ public class Login extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-//        FlatSolarizedDarkIJTheme.setup();
-//        FlatGradiantoNatureGreenIJTheme.setup();
-//        FlatMaterialDarkerContrastIJTheme.setup();
           FlatLightFlatIJTheme.setup();
-//        FlatLightFlatIJTheme.setup();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

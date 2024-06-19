@@ -117,10 +117,10 @@ public class Login extends javax.swing.JFrame {
             if (controleur.isAdmin(username)) {
                 super.dispose();
                 new Main(username).setVisible(true);
-            } else if (controleur.isGestionnaire(username)) {
+            } else if (controleur.isCharroi(username)) {
                 super.dispose();
                 new GestionnaireFormulaire(username).setVisible(true);
-            } else if (controleur.isChefService(username)) {
+            } else if (controleur.isAgent(username)) {
                 super.dispose();
                 new ChefServiceFormulaire(username).setVisible(true);
             } else {

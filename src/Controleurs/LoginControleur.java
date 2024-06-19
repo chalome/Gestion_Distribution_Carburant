@@ -14,8 +14,8 @@ public class LoginControleur implements Ilogin {
     private ResultSet res;
     private static final String LOGIN = "SELECT * FROM employe WHERE employePrenom=? AND employeMatricule=?";
     private static final String ADMIN = "SELECT * FROM employe WHERE employePrenom=? AND employeCategorie=6";
-    private static final String GESTIONNAIRE = "SELECT * FROM employe WHERE employePrenom=? AND employeCategorie=5";
-    private static final String CHEF = "SELECT * FROM employe WHERE employePrenom=? AND employeCategorie=2";
+    private static final String CHARROI = "SELECT * FROM employe WHERE employePrenom=? AND employeCategorie=5";
+    private static final String AGENT = "SELECT * FROM employe WHERE employePrenom=? AND employeCategorie=2";
 
     public LoginControleur() {
     }
@@ -39,10 +39,10 @@ public class LoginControleur implements Ilogin {
     }
 
     @Override
-    public boolean isGestionnaire(String employe) {
+    public boolean isCharroi(String employe) {
       connection = getConnection();
         try {
-            pst = connection.prepareStatement(GESTIONNAIRE);
+            pst = connection.prepareStatement(CHARROI);
             pst.setString(1, employe);
             res=pst.executeQuery();
             while(res.next()){
@@ -56,10 +56,10 @@ public class LoginControleur implements Ilogin {
     }
 
     @Override
-    public boolean isChefService(String employe) {
+    public boolean isAgent(String employe) {
     connection = getConnection();
         try {
-            pst = connection.prepareStatement(CHEF);
+            pst = connection.prepareStatement(AGENT);
             pst.setString(1, employe);
             res=pst.executeQuery();
             while(res.next()){

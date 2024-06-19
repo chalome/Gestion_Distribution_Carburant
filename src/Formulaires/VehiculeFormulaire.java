@@ -306,10 +306,10 @@ public class VehiculeFormulaire extends javax.swing.JFrame {
         if (controleur.isAdmin(session.getText())) {
             super.dispose();
             new Main(session.getText()).setVisible(true);
-        } else if (controleur.isChefService(session.getText())) {
+        } else if (controleur.isAgent(session.getText())) {
             super.dispose();
             new ChefServiceFormulaire(session.getText()).setVisible(true);
-        } else if (controleur.isGestionnaire(session.getText())) {
+        } else if (controleur.isCharroi(session.getText())) {
             super.dispose();
             new GestionnaireFormulaire(session.getText()).setVisible(true);
         } else {
