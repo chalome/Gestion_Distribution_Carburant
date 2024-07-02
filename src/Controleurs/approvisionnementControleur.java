@@ -34,24 +34,9 @@ public class approvisionnementControleur extends Commun implements IApprovisionn
     }
 
     @Override
-    public boolean dejaExist(String text) {
-        String requete = "select * from approvisionnement where approvisionnementQuantite>0";
-        try {
-            pst = connection.prepareStatement(requete);
-            res = pst.executeQuery();
-            while (res.next()) {
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-
-    }
-
-    public boolean dejaExist() {
+    public boolean dejaExist(String carburant) {
         connection = getConnection();
-        String requete = "select * from approvisionnement where approvisionnementQuantite>0";
+        String requete = "select * from approvisionnement where approvisionnementQuantite>0 and approvisionnementCarburant=( select carburant.carburantID from carburant WHERE carburant.carburantNom='" + carburant + "')";
         try {
             pst = connection.prepareStatement(requete);
             res = pst.executeQuery();

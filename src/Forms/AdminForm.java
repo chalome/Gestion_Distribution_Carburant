@@ -717,22 +717,22 @@ public class AdminForm extends javax.swing.JFrame {
 
         timeLabel.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         timeLabel.setForeground(new java.awt.Color(0, 102, 102));
-        Home.add(timeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 320, 30));
+        Home.add(timeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 30, 320, 30));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Quantité en stock:");
-        Home.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 190, 120, 30));
+        Home.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 500, 120, 30));
 
         quantiteStock.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         quantiteStock.setForeground(new java.awt.Color(0, 102, 102));
-        Home.add(quantiteStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 190, 170, 30));
+        Home.add(quantiteStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 500, 170, 30));
 
         jLabel64.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel64.setText("Utilisateur connecté:");
-        Home.add(jLabel64, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 434, 130, 30));
+        Home.add(jLabel64, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 490, 130, 30));
 
         userConnected.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        Home.add(userConnected, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 440, 150, 30));
+        Home.add(userConnected, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 490, 150, 30));
 
         MainPanel.add(Home, "card10");
 
@@ -746,8 +746,8 @@ public class AdminForm extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Ajouter un utilisateur");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel7.setText("Matricule");
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setText("Mot de passe");
 
         employeMatricule.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -3261,8 +3261,8 @@ public class AdminForm extends javax.swing.JFrame {
                 || appFourn.getSelectedItem().toString().trim().isEmpty()
                 || appCarburant.getSelectedItem().toString().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tous Les champ sont obligatoires", "Erreur", JOptionPane.ERROR_MESSAGE);
-        } else if (new approvisionnementControleur().dejaExist()) {
-            JOptionPane.showMessageDialog(this, "Il ya encore du carburant en stock", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } else if (new approvisionnementControleur().dejaExist(appCarburant.getSelectedItem().toString())) {
+            JOptionPane.showMessageDialog(this, "Il ya encore " + appCarburant.getSelectedItem().toString() + " en stock", "Erreur", JOptionPane.ERROR_MESSAGE);
         } else {
             ajout = new approvisionnementControleur().ajouter(new Approvisionnement(qte, pu, pt, fourn, carburant));
             if (ajout == 1) {
@@ -3355,7 +3355,7 @@ public class AdminForm extends javax.swing.JFrame {
         int ligne = tableDemande1.getSelectedRow();
         int id = Integer.parseInt(tableDemande1.getValueAt(ligne, 0).toString());
         int suppression;
-        Demande demande =new Demande();
+        Demande demande = new Demande();
         demande.setDemandeID(id);
         int y = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiement faire le refus ?",
                 "Confirmation", JOptionPane.YES_NO_OPTION);
