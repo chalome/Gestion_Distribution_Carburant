@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controleurs;
 
 import static Base_De_Donnees.Connection.getConnection;
@@ -14,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -164,10 +160,10 @@ public class approvisionnementControleur extends Commun implements IApprovisionn
         return approvisionnements;
     }
 
-    public String afficherQuantite() {
+    public String afficherQuantite(String carburant) {
         String quantite = "";
         connection = getConnection();
-        String sql = "select approvisionnementQuantite as qte from approvisionnement where approvisionnementQuantite>0";
+        String sql = "SELECT approvisionnementQuantite as qte FROM approvisionnement WHERE approvisionnementCarburant=" + carburant;
         try {
             pst = connection.prepareStatement(sql);
             res = pst.executeQuery();

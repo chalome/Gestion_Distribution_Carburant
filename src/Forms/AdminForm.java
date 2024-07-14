@@ -120,6 +120,7 @@ public class AdminForm extends javax.swing.JFrame {
     }
 
     void afficherCombo() {
+        new EmployeControleur().afficherCharroi(employeCombo);
         List<TypeCarburant> serviceList = new CarburantControleur().afficherTypeCaburants();
         for (TypeCarburant carburant : serviceList) {
             carburantCombo.addItem(carburant);
@@ -127,13 +128,13 @@ public class AdminForm extends javax.swing.JFrame {
         }
         List<Employe> employes = new EmployeControleur().afficherEmployes();
         for (Employe employe : employes) {
-            employeCombo.addItem(employe);
+
             chauffeurCombo.addItem(employe);
         }
         List<Vehicule> vehicules = new VehiculeControleur().afficherVehicules();
         for (Vehicule vehicule : vehicules) {
             VehiculeCombo.addItem(vehicule);
-            vehiculeTxt.addItem(vehicule);
+//            vehiculeTxt.addItem(vehicule);
         }
         List<Station> stations = new StationControleur().afficherStations();
         for (Station station : stations) {
@@ -347,9 +348,17 @@ public class AdminForm extends javax.swing.JFrame {
         pieChart1 = new Themes.PieChart();
         timeLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        quantiteStock = new javax.swing.JLabel();
+        essenceTxt = new javax.swing.JLabel();
         jLabel64 = new javax.swing.JLabel();
         userConnected = new javax.swing.JLabel();
+        jLabel65 = new javax.swing.JLabel();
+        keroseneTxt = new javax.swing.JLabel();
+        dieselTxt = new javax.swing.JLabel();
+        jLabel66 = new javax.swing.JLabel();
+        jLabel67 = new javax.swing.JLabel();
+        mazutouTxt = new javax.swing.JLabel();
+        jLabel68 = new javax.swing.JLabel();
+        gazoleTxt = new javax.swing.JLabel();
         EmployePanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -720,12 +729,12 @@ public class AdminForm extends javax.swing.JFrame {
         Home.add(timeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 30, 320, 30));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Quantité en stock:");
-        Home.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 500, 120, 30));
+        jLabel1.setText("Essence:");
+        Home.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 180, 120, 30));
 
-        quantiteStock.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        quantiteStock.setForeground(new java.awt.Color(0, 102, 102));
-        Home.add(quantiteStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 500, 170, 30));
+        essenceTxt.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        essenceTxt.setForeground(new java.awt.Color(0, 102, 102));
+        Home.add(essenceTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 180, 170, 30));
 
         jLabel64.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel64.setText("Utilisateur connecté:");
@@ -733,6 +742,38 @@ public class AdminForm extends javax.swing.JFrame {
 
         userConnected.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         Home.add(userConnected, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 490, 150, 30));
+
+        jLabel65.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel65.setText("Kerosene:");
+        Home.add(jLabel65, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 220, 120, 30));
+
+        keroseneTxt.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        keroseneTxt.setForeground(new java.awt.Color(0, 102, 102));
+        Home.add(keroseneTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 220, 170, 30));
+
+        dieselTxt.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        dieselTxt.setForeground(new java.awt.Color(0, 102, 102));
+        Home.add(dieselTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 260, 170, 30));
+
+        jLabel66.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel66.setText("Diesel:");
+        Home.add(jLabel66, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 260, 120, 30));
+
+        jLabel67.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel67.setText("Mazutou:");
+        Home.add(jLabel67, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 300, 120, 30));
+
+        mazutouTxt.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        mazutouTxt.setForeground(new java.awt.Color(0, 102, 102));
+        Home.add(mazutouTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 300, 170, 30));
+
+        jLabel68.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel68.setText("Gazole:");
+        Home.add(jLabel68, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 340, 120, 30));
+
+        gazoleTxt.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        gazoleTxt.setForeground(new java.awt.Color(0, 102, 102));
+        Home.add(gazoleTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 340, 170, 30));
 
         MainPanel.add(Home, "card10");
 
@@ -1806,6 +1847,11 @@ public class AdminForm extends javax.swing.JFrame {
         qteTxt1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         serviceCombo2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        serviceCombo2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                serviceCombo2ItemStateChanged(evt);
+            }
+        });
 
         jLabel37.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel37.setText("Service:");
@@ -1873,6 +1919,11 @@ public class AdminForm extends javax.swing.JFrame {
         jScrollPane8.setViewportView(tableDemande);
 
         vehiculeTxt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        vehiculeTxt.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vehiculeTxtItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout demandePanelLayout = new javax.swing.GroupLayout(demandePanel);
         demandePanel.setLayout(demandePanelLayout);
@@ -2476,6 +2527,8 @@ public class AdminForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Tous Les champ sont obligatoires", "Erreur", JOptionPane.ERROR_MESSAGE);
         } else if (controleur.dejaExist(matricule)) {
             JOptionPane.showMessageDialog(this, "Le matricule deja existe", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } else if (!new DemandeControleur().isNumber(employeTelephone.getText())) {
+            JOptionPane.showMessageDialog(this, "Ce n'est pas une correcte valeur(Telephone)", "Erreur!", JOptionPane.ERROR_MESSAGE);
         } else {
             Employe employe = new Employe(matricule, nom, prenom, adresse, serviceId, categorieID, telephone);
             ajout = controleur.create(employe);
@@ -2667,6 +2720,8 @@ public class AdminForm extends javax.swing.JFrame {
                 || service.isEmpty()
                 || chauffeur.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tous Les champ sont obligatoires", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } else if (!new DemandeControleur().isNumber(consom.getText())) {
+            JOptionPane.showMessageDialog(this, "Ce n'est pas une correcte valeur(Cons-Moy)", "Erreur!", JOptionPane.ERROR_MESSAGE);
         } else {
             Vehicule vehicule = new Vehicule(plaques, modeleID, annees, carburantID, consMoy, serviceId, chauffeurID);
             ajout = controleur.create(vehicule);
@@ -2680,15 +2735,24 @@ public class AdminForm extends javax.swing.JFrame {
     }//GEN-LAST:event_ajouterActionPerformed
 
     private void bnidTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bnidTxtKeyReleased
-        qteTxt.setText(new BonCarburantControleur().afficherQuantite(bnidTxt.getText()));
+        if (!bnidTxt.getText().isEmpty()) {
+            qteTxt.setText(new BonCarburantControleur().afficherQuantite(bnidTxt.getText()));
+        }
+        if (!new DemandeControleur().isNumber(bnidTxt.getText())) {
+            JOptionPane.showMessageDialog(this, "Ce n'est pas une correcte valeur", "Erreur!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_bnidTxtKeyReleased
 
     private void puTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_puTxtKeyReleased
-        int a = Integer.parseInt(qteTxt.getText());
-        int b = Integer.parseInt(puTxt.getText());
-        int pt = a * b;
-        Integer i = pt;
-        ptTxt.setText(i.toString());
+        if (!new DemandeControleur().isNumber(puTxt.getText())) {
+            JOptionPane.showMessageDialog(this, "Ce n'est pas une correcte valeur", "Erreur!", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int a = Integer.parseInt(qteTxt.getText());
+            int b = Integer.parseInt(puTxt.getText());
+            int pt = a * b;
+            Integer i = pt;
+            ptTxt.setText(i.toString());
+        }
     }//GEN-LAST:event_puTxtKeyReleased
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
@@ -2705,8 +2769,12 @@ public class AdminForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Le Bon n'existe pas", "Erreur", JOptionPane.ERROR_MESSAGE);
         } else if (new approvisionnementControleur().finished()) {
             JOptionPane.showMessageDialog(this, "Il n'y a plus de carburant dans le stock", "Erreur", JOptionPane.ERROR_MESSAGE);
-        } else if (Integer.parseInt(qteTxt.getText()) > Integer.parseInt(new approvisionnementControleur().afficherQuantite())) {
-            JOptionPane.showMessageDialog(this, "Il reste " + new approvisionnementControleur().afficherQuantite() + " litres en stock", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } 
+//        else if (Integer.parseInt(qteTxt.getText()) > Integer.parseInt(new approvisionnementControleur().afficherQuantite())) {
+//            JOptionPane.showMessageDialog(this, "Il reste " + new approvisionnementControleur().afficherQuantite() + " litres en stock", "Erreur", JOptionPane.ERROR_MESSAGE);
+//        }
+        else if (!new DemandeControleur().isNumber(qteTxt.getText()) || !new DemandeControleur().isNumber(puTxt.getText()) || !new DemandeControleur().isNumber(ptTxt.getText())) {
+            JOptionPane.showMessageDialog(this, "Ce n'est pas une correcte valeur", "Erreur!", JOptionPane.ERROR_MESSAGE);
         } else {
             ajout = new TransactionControleur().create(new Transaction(qte, pu, pt, bon, station, service));
             if (ajout == 1) {
@@ -2788,6 +2856,8 @@ public class AdminForm extends javax.swing.JFrame {
                 || service.trim().isEmpty()
                 || motif.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tous Les champ sont obligatoires", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } else if (!new DemandeControleur().isNumber(qteTxt1.getText())) {
+            JOptionPane.showMessageDialog(this, "La valeur (Quantite) n'est pas correcte", "Erreur", JOptionPane.ERROR_MESSAGE);
         } else {
             ajout = controleur.create(new Demande(qte, controleurs.returnId("serviceID", "service", "serviceNom", service), motif, vehiculeTxt.getSelectedItem().toString()));
             if (ajout == 1) {
@@ -2887,6 +2957,10 @@ public class AdminForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "L'ID est obligatoire", "Erreur!", JOptionPane.ERROR_MESSAGE);
         } else if (!new DemandeControleur().dejaExist(demandeID.getText())) {
             JOptionPane.showMessageDialog(this, "L'ID n'existe pas", "Erreur!", JOptionPane.ERROR_MESSAGE);
+        } else if (new DemandeControleur().dejaApprouve(demandeID.getText())) {
+            JOptionPane.showMessageDialog(this, "La demande est deja approuve", "Erreur!", JOptionPane.ERROR_MESSAGE);
+        } else if (!new DemandeControleur().isNumber(demandeID.getText()) || !new DemandeControleur().isNumber(qteTxt2.getText())) {
+            JOptionPane.showMessageDialog(this, "Ce n'est pas une correcte valeur", "Erreur!", JOptionPane.ERROR_MESSAGE);
         } else {
             ajout = bonCarburantControleur.create(new BonCarburant(
                     carburantControleur.returnId("carburantID", "carburant", "carburantNom", carburantText.getText()),
@@ -3263,6 +3337,8 @@ public class AdminForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Tous Les champ sont obligatoires", "Erreur", JOptionPane.ERROR_MESSAGE);
         } else if (new approvisionnementControleur().dejaExist(appCarburant.getSelectedItem().toString())) {
             JOptionPane.showMessageDialog(this, "Il ya encore " + appCarburant.getSelectedItem().toString() + " en stock", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } else if (!new DemandeControleur().isNumber(appQte.getText()) || !new DemandeControleur().isNumber(appPU.getText()) || !new DemandeControleur().isNumber(appPT.getText())) {
+            JOptionPane.showMessageDialog(this, "Ce n'est pas une correcte valeur", "Erreur!", JOptionPane.ERROR_MESSAGE);
         } else {
             ajout = new approvisionnementControleur().ajouter(new Approvisionnement(qte, pu, pt, fourn, carburant));
             if (ajout == 1) {
@@ -3369,6 +3445,15 @@ public class AdminForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_refuserActionPerformed
+
+    private void serviceCombo2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_serviceCombo2ItemStateChanged
+        vehiculeTxt.removeAllItems();
+        new VehiculeControleur().afficherVehicule(vehiculeTxt, serviceCombo2.getSelectedItem().toString());
+    }//GEN-LAST:event_serviceCombo2ItemStateChanged
+
+    private void vehiculeTxtItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vehiculeTxtItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vehiculeTxtItemStateChanged
     private String tableSomme(int colonneMontant) {
         int montant = 0;
         for (int i = 0; i < rapportTable.getRowCount(); i++) {
@@ -3457,6 +3542,7 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JTextField demandeID;
     private javax.swing.JPanel demandePanel;
     private javax.swing.JButton demandebtn;
+    private javax.swing.JLabel dieselTxt;
     private javax.swing.JTextField employeAdresse;
     private javax.swing.JButton employeAjouter;
     private javax.swing.JButton employeAjouter1;
@@ -3471,6 +3557,8 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JTable employeTable;
     private javax.swing.JTextField employeTelephone;
     private javax.swing.JButton employebtn;
+    private javax.swing.JLabel essenceTxt;
+    private javax.swing.JLabel gazoleTxt;
     private javax.swing.JButton homebtn;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -3535,6 +3623,10 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel64;
+    private javax.swing.JLabel jLabel65;
+    private javax.swing.JLabel jLabel66;
+    private javax.swing.JLabel jLabel67;
+    private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -3554,10 +3646,12 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JLabel keroseneTxt;
     private javax.swing.JList listCarburant;
     private javax.swing.JList listCategorie;
     private javax.swing.JList listModele;
     private javax.swing.JList listService;
+    private javax.swing.JLabel mazutouTxt;
     private javax.swing.JComboBox<Modele> modeleCombo;
     private javax.swing.JTextField modeleText;
     private javax.swing.JButton modifier;
@@ -3576,7 +3670,6 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JTextField qteTxt;
     private javax.swing.JTextField qteTxt1;
     private javax.swing.JTextField qteTxt2;
-    private javax.swing.JLabel quantiteStock;
     private javax.swing.JTable rapportTable;
     private javax.swing.JButton rapportbtn;
     private javax.swing.JTextField rcTxt;
@@ -3621,7 +3714,11 @@ public class AdminForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 private void init() {
         DemandeControleur controleur = new DemandeControleur();
-        quantiteStock.setText(new approvisionnementControleur().afficherQuantite() + " litres");
+        essenceTxt.setText(new approvisionnementControleur().afficherQuantite("3") + " litres");
+        keroseneTxt.setText(new approvisionnementControleur().afficherQuantite("5") + " litres");
+        dieselTxt.setText(new approvisionnementControleur().afficherQuantite("1") + " litres");
+        gazoleTxt.setText(new approvisionnementControleur().afficherQuantite("4") + " litres");
+        mazutouTxt.setText(new approvisionnementControleur().afficherQuantite("2") + " litres");
         pieChart1.setChartType(PieChart.PeiChartType.DONUT_CHART);
         pieChart1.addData(new ModelPieChart("Demandes en attentes", controleur.nombreDemande(3), new Color(23, 126, 238)));
         pieChart1.addData(new ModelPieChart("Demandes refusées", controleur.nombreDemande(2), new Color(221, 65, 65)));

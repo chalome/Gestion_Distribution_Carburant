@@ -1,6 +1,5 @@
 package Controleurs;
 
-
 import static Base_De_Donnees.Connection.getConnection;
 import Interfaces.Commun;
 import Interfaces.IEmploye;
@@ -10,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class EmployeControleur extends Commun implements IEmploye {
@@ -145,4 +145,16 @@ public class EmployeControleur extends Commun implements IEmploye {
         return id;
     }
 
+    public void afficherCharroi(JComboBox combo) {
+        connection = getConnection();
+        try {
+            pst = connection.prepareStatement("select concat(employeNom,' ',employePrenom) as nom from employe where employeCategorie=5");
+            res = pst.executeQuery();
+            while (res.next()) {
+                combo.addItem(res.getString("nom"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

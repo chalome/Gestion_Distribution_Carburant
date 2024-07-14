@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class VehiculeControleur extends Commun implements IVehicule {
@@ -144,4 +145,16 @@ public class VehiculeControleur extends Commun implements IVehicule {
         return vehicules;
     }
 
+    public void afficherVehicule(JComboBox combo, String service) {
+        connection = getConnection();
+        try {
+            pst = connection.prepareStatement("select vehiculePlaque as plaque from vehicule where vehiculeService=(select serviceID from service where serviceNom='" + service + "')");
+            res = pst.executeQuery();
+            while (res.next()) {
+                combo.addItem(res.getString("plaque"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

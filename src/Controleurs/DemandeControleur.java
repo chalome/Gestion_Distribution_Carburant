@@ -160,4 +160,26 @@ public class DemandeControleur extends ADemande {
         }
         return nombre;
     }
+     public boolean dejaApprouve(String text) {
+        connection = getConnection();
+        try {
+            pst = connection.prepareStatement("SELECT * FROM demande WHERE demandeID=" + text+" and demandeEtat=1");
+            res = pst.executeQuery();
+            while (res.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return false;
+    }
+     public boolean isNumber(String value){
+         try {
+             double number=Double.parseDouble(value);
+              return true;
+         } catch (Exception e) {
+              return false;
+         }
+        
+     }
 }
